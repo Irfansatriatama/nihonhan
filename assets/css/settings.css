@@ -1,0 +1,562 @@
+/* ============================================================
+   NIHONHAN - Settings & Stats CSS (Fase 7)
+   ============================================================ */
+
+/* ── Settings Sections ─────────────────────────────────────── */
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.settings-section-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.settings-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.settings-row-info {
+  flex: 1;
+}
+
+.settings-row-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.settings-row-desc {
+  font-size: 0.78rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.settings-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 20px;
+}
+
+/* ── Toggle Switch ──────────────────────────────────────────── */
+.toggle-switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 99px;
+  transition: background 0.25s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 4px;
+  top: 4px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--red);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.toggle-switch input:disabled + .toggle-slider {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Reset Grid ─────────────────────────────────────────────── */
+.settings-warn-text {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  padding: 14px 20px 10px;
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+.reset-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 16px 20px;
+}
+
+@media (max-width: 600px) {
+  .reset-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.reset-module-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: var(--font-body);
+}
+
+.reset-module-btn:hover {
+  border-color: var(--red);
+  box-shadow: 0 2px 8px rgba(192,57,43,0.1);
+}
+
+.reset-module-char {
+  font-family: var(--font-cjk);
+  font-size: 1.6rem;
+  color: var(--red);
+  line-height: 1;
+}
+
+.reset-module-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.reset-module-count {
+  font-size: 0.65rem;
+  color: var(--text-3);
+}
+
+/* ── About App ──────────────────────────────────────────────── */
+.about-app {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.about-logo {
+  font-family: var(--font-cjk);
+  font-size: 3rem;
+  color: var(--red);
+  line-height: 1;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red-soft);
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.about-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.about-version {
+  font-size: 0.78rem;
+  color: var(--text-3);
+  margin: 2px 0 6px;
+}
+
+.about-desc {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ── Confirm Dialog ─────────────────────────────────────────── */
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.confirm-backdrop.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.confirm-dialog {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  transform: scale(0.92);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.confirm-backdrop.show .confirm-dialog {
+  transform: scale(1);
+}
+
+.confirm-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.confirm-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.confirm-msg {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ── Stats Page ─────────────────────────────────────────────── */
+.module-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.module-progress-item:last-child {
+  border-bottom: none;
+}
+
+.module-progress-char {
+  font-family: var(--font-cjk);
+  font-size: 1.8rem;
+  color: var(--red);
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.module-progress-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.module-progress-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.module-progress-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.module-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.module-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.module-progress-pct {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Quiz History ───────────────────────────────────────────── */
+.quiz-history-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.quiz-history-item:last-child {
+  border-bottom: none;
+}
+
+.quiz-history-score {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--red);
+  min-width: 40px;
+  text-align: center;
+}
+
+.quiz-history-score.perfect {
+  color: var(--gold-dark);
+}
+
+.quiz-history-info {
+  flex: 1;
+}
+
+.quiz-history-module {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+.quiz-history-meta {
+  font-size: 0.73rem;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.quiz-history-acc {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* ── Badge Stats Grid ───────────────────────────────────────── */
+.badge-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+@media (max-width: 600px) {
+  .badge-stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+}
+
+.badge-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.badge-stat-item.earned {
+  background: var(--gold-soft);
+  border-color: rgba(212,175,55,0.4);
+}
+
+.badge-stat-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.badge-stat-item:not(.earned) .badge-stat-icon {
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+
+.badge-stat-name {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-2);
+  line-height: 1.3;
+}
+
+.badge-stat-item:not(.earned) .badge-stat-name {
+  color: var(--text-3);
+}
+
+/* ── Heatmap ────────────────────────────────────────────────── */
+.heatmap-wrap {
+  padding: 8px 20px 16px;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(28, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .heatmap-grid {
+    grid-template-columns: repeat(28, 1fr);
+    gap: 3px;
+  }
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  cursor: default;
+  transition: transform 0.15s;
+  position: relative;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.3);
+  z-index: 1;
+}
+
+.heatmap-cell.level-0 { background: var(--border); }
+.heatmap-cell.level-1 { background: rgba(192,57,43,0.25); }
+.heatmap-cell.level-2 { background: rgba(192,57,43,0.5); }
+.heatmap-cell.level-3 { background: rgba(192,57,43,0.75); }
+.heatmap-cell.level-4 { background: var(--red); }
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.heatmap-legend .heatmap-cell {
+  width: 14px;
+  height: 14px;
+  aspect-ratio: unset;
+}
+
+/* ── Btn danger ─────────────────────────────────────────────── */
+.btn-danger {
+  background: var(--red);
+  color: #fff;
+  border: none;
+}
+
+.btn-danger:hover {
+  background: var(--red-dark);
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 0.78rem;
+}
+
+.empty-state {
+  padding: 28px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 0.875rem;
+}
+
+/* ── Fase 18: Reminder ─────────────────────────────────────── */
+.reminder-time-input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-width: 110px;
+  flex-shrink: 0;
+}
+
+.reminder-time-input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-soft);
+}
+
+.reminder-time-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.reminder-status-bar {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reminder-status-bar.status-ok {
+  background: rgba(39,174,96,0.12);
+  color: #1a7a42;
+  border: 1px solid rgba(39,174,96,0.25);
+}
+
+.reminder-status-bar.status-off {
+  background: var(--surface);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .reminder-time-input {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .reminder-status-bar.status-ok {
+  color: #5ed68c;
+  background: rgba(39,174,96,0.1);
+}

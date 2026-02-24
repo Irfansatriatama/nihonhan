@@ -1,0 +1,862 @@
+/* ============================================================
+   NIHONHAN - Components CSS
+   Buttons, Cards, Forms, Modals, Badges, Progress
+   ============================================================ */
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background var(--dur), color var(--dur), border-color var(--dur),
+              transform 0.1s, box-shadow var(--dur);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  box-shadow: 0 4px 14px rgba(192,57,43,0.3);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--text);
+  border-color: var(--gold);
+}
+.btn-gold:hover:not(:disabled) {
+  background: var(--gold-dark);
+  border-color: var(--gold-dark);
+  box-shadow: 0 4px 14px rgba(212,175,55,0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--red);
+  border-color: var(--red);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--red-soft);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border-color: var(--border);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn-sm { padding: 7px 14px; font-size: 0.8rem; }
+.btn-lg { padding: 13px 28px; font-size: 0.95rem; }
+.btn-block { width: 100%; }
+.btn-icon { padding: 9px; border-radius: var(--radius); }
+
+/* Loading spinner in button */
+.btn .spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  transition: box-shadow var(--dur), border-color var(--dur);
+}
+
+.card:hover { box-shadow: 0 4px 20px var(--shadow); }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+.card-interactive:hover {
+  border-color: var(--red);
+  box-shadow: 0 4px 20px rgba(192,57,43,0.1);
+}
+
+/* Stat card */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-card .stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+}
+
+.stat-card .stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.stat-card .stat-desc {
+  font-size: 0.8rem;
+  color: var(--text-3);
+}
+
+.stat-card.red   { border-left: 3px solid var(--red);  }
+.stat-card.gold  { border-left: 3px solid var(--gold); }
+
+/* ── Forms ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.3px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color var(--dur), box-shadow var(--dur);
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+}
+
+.form-control.error {
+  border-color: var(--red);
+}
+.form-control.error:focus {
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.12);
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: var(--red);
+  display: none;
+}
+.form-error.show { display: block; }
+
+.form-hint {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+/* Input with icon */
+.input-wrapper {
+  position: relative;
+}
+.input-wrapper .form-control {
+  padding-left: 40px;
+}
+.input-wrapper .input-icon {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  font-size: 1rem;
+  pointer-events: none;
+}
+.input-wrapper .input-toggle {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-3);
+  font-size: 0.9rem;
+  padding: 2px;
+}
+
+/* ── Progress Bar ── */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transition: width 0.6s var(--ease);
+}
+
+.progress-sm { height: 5px; }
+.progress-lg { height: 12px; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.badge-red    { background: var(--red-soft);  color: var(--red-dark); }
+.badge-gold   { background: var(--gold-soft); color: var(--gold-dark); }
+.badge-gray   { background: var(--surface-2); color: var(--text-3); }
+.badge-green  { background: #E8F5E9; color: #2E7D32; }
+
+/* ── Modal ── */
+.modal-backdrop {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(26,18,8,0.5);
+  z-index: 300;
+  backdrop-filter: blur(3px);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-backdrop.open {
+  display: flex;
+  animation: fadeIn 0.2s var(--ease) both;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(26,18,8,0.2);
+  animation: fadeIn 0.25s var(--ease) both;
+}
+
+.modal-header {
+  padding: 24px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: background var(--dur);
+  color: var(--text-3);
+  font-size: 1rem;
+}
+.modal-close:hover { background: var(--surface-2); color: var(--text); }
+
+.modal-body { padding: 20px 24px; }
+.modal-footer {
+  padding: 0 24px 24px;
+  display: flex; gap: 10px; justify-content: flex-end;
+}
+
+/* ── Alert ── */
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 16px;
+}
+.alert-error   { background: var(--red-soft);  border-color: #F1948A; color: var(--red-dark); }
+.alert-success { background: #E8F5E9; border-color: #A5D6A7; color: #1B5E20; }
+.alert-warning { background: var(--gold-soft); border-color: #F9E4B7; color: var(--gold-dark); }
+
+/* ── Divider ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text-3); font-size: 0.78rem;
+  margin: 16px 0;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1;
+  height: 1px; background: var(--border);
+}
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-3);
+}
+.empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.empty-state p { font-size: 0.9rem; }
+
+/* ── Skeleton Loader ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--border) 25%, var(--surface-2) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.4s linear infinite;
+  border-radius: var(--radius);
+}
+@keyframes skeleton-wave {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Grid helpers ── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+
+@media (max-width: 768px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* ── Audio Button (Fase 9) ── */
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  flex-shrink: 0;
+  padding: 0;
+}
+.audio-btn:hover {
+  background: var(--red-soft);
+  border-color: var(--red);
+  transform: scale(1.1);
+}
+.audio-btn:active {
+  transform: scale(0.95);
+}
+.audio-btn.playing {
+  background: var(--red-soft);
+  border-color: var(--red);
+  animation: audio-pulse 0.6s ease infinite alternate;
+}
+@keyframes audio-pulse {
+  from { box-shadow: 0 0 0 0 rgba(192,57,43,0.3); }
+  to   { box-shadow: 0 0 0 6px rgba(192,57,43,0); }
+}
+.audio-btn.audio-hidden { display: none !important; }
+
+/* inline in modal / cards */
+.audio-btn-sm {
+  width: 26px;
+  height: 26px;
+  font-size: 0.75rem;
+}
+.audio-btn-lg {
+  width: 38px;
+  height: 38px;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   SRS (Spaced Repetition System) — Fase 11
+   ============================================================ */
+
+/* ── SRS Stats Bar ── */
+.srs-stats-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.srs-stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+.srs-stat-chip .chip-icon { font-size: 1rem; }
+.srs-stat-chip.due    { background: rgba(192,57,43,0.1); border-color: rgba(192,57,43,0.25); color: var(--red); }
+.srs-stat-chip.learn  { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.25); color: var(--gold-dark); }
+.srs-stat-chip.master { background: rgba(39,174,96,0.1); border-color: rgba(39,174,96,0.25); color: #27AE60; }
+
+/* ── SRS Card ── */
+.srs-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 0 16px;
+}
+
+.srs-card {
+  width: 100%;
+  max-width: 480px;
+  min-height: 200px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 24px var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.srs-card .srs-char {
+  font-family: var(--font-cjk);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--text);
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.srs-card .srs-reading {
+  font-size: 1.1rem;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.srs-card .srs-meaning {
+  font-size: 1rem;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.srs-card .srs-hidden {
+  display: none;
+}
+
+.srs-card .srs-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-weight: 700;
+  background: var(--gold-soft);
+  color: var(--gold-dark);
+  border: 1px solid rgba(212,175,55,0.3);
+}
+.srs-card .srs-badge.new-badge {
+  background: rgba(192,57,43,0.1);
+  color: var(--red);
+  border-color: rgba(192,57,43,0.2);
+}
+
+.srs-card .srs-counter {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+/* ── SRS Reveal Button ── */
+.srs-reveal-btn {
+  padding: 11px 36px;
+  border-radius: var(--radius);
+  background: var(--red);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 12px rgba(192,57,43,0.25);
+}
+.srs-reveal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(192,57,43,0.35);
+}
+
+/* ── SRS Rating Buttons ── */
+.srs-ratings {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.srs-rating-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 8px;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  line-height: 1.3;
+}
+.srs-rating-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-md);
+}
+.srs-rating-btn .rbtn-emoji { font-size: 1.2rem; }
+.srs-rating-btn .rbtn-label { font-size: 0.75rem; font-weight: 600; }
+.srs-rating-btn .rbtn-interval { font-size: 0.68rem; color: var(--text-3); font-weight: 400; }
+
+.srs-rating-btn[data-rating="0"] { background:#fdecea; border-color:#f5b7b1; color:#c0392b; }
+.srs-rating-btn[data-rating="1"] { background:#fef9e7; border-color:#f9e79f; color:#b7950b; }
+.srs-rating-btn[data-rating="2"] { background:#e9f7ef; border-color:#a9dfbf; color:#1e8449; }
+.srs-rating-btn[data-rating="3"] { background:#eaf4fb; border-color:#85c1e9; color:#1a5276; }
+
+/* ── SRS Done State ── */
+.srs-done-wrap {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.srs-done-icon { font-size: 4rem; margin-bottom: 16px; }
+.srs-done-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.srs-done-sub { font-size: 0.95rem; color: var(--text-3); margin-bottom: 24px; }
+
+/* ── SRS Empty State ── */
+.srs-empty-wrap {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.srs-empty-icon { font-size: 3.5rem; margin-bottom: 12px; }
+.srs-empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.srs-empty-sub { font-size: 0.88rem; color: var(--text-3); margin-bottom: 20px; line-height: 1.5; }
+
+/* ── SRS Progress indicator ── */
+.srs-progress-row {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+.srs-progress-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.srs-progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  transition: width 0.4s var(--ease);
+}
+
+/* ── Dark mode overrides ── */
+[data-theme="dark"] .srs-rating-btn[data-rating="0"] { background: rgba(192,57,43,0.15); border-color: rgba(192,57,43,0.3); color: #e74c3c; }
+[data-theme="dark"] .srs-rating-btn[data-rating="1"] { background: rgba(212,175,55,0.12); border-color: rgba(212,175,55,0.3); color: #f4d03f; }
+[data-theme="dark"] .srs-rating-btn[data-rating="2"] { background: rgba(39,174,96,0.15); border-color: rgba(39,174,96,0.3); color: #2ecc71; }
+[data-theme="dark"] .srs-rating-btn[data-rating="3"] { background: rgba(52,152,219,0.15); border-color: rgba(52,152,219,0.3); color: #5dade2; }
+
+/* ── Dashboard SRS section ── */
+.srs-due-section {
+  margin-bottom: 28px;
+}
+.srs-due-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.srs-due-module-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.srs-due-module-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-md);
+}
+.srs-due-module-card .due-icon { font-size: 1.6rem; }
+.srs-due-module-card .due-info { flex: 1; min-width: 0; }
+.srs-due-module-card .due-name { font-size: 0.85rem; font-weight: 600; color: var(--text-2); }
+.srs-due-module-card .due-count { font-size: 1.2rem; font-weight: 700; color: var(--red); }
+.srs-due-module-card .due-label { font-size: 0.72rem; color: var(--text-3); }
+.srs-due-module-card.no-due .due-count { color: #27AE60; font-size: 1rem; }
+.srs-due-zero {
+  padding: 24px;
+  text-align: center;
+  background: rgba(39,174,96,0.08);
+  border: 1.5px solid rgba(39,174,96,0.2);
+  border-radius: var(--radius);
+  color: #1e8449;
+}
+[data-theme="dark"] .srs-due-zero { color: #2ecc71; background: rgba(39,174,96,0.12); border-color: rgba(39,174,96,0.25); }
+
+
+/* ── Fase 12: Favorit / Bookmark ─────────────────────────── */
+
+/* Tombol bintang favorit */
+.fav-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 2;
+  color: var(--text-3);
+}
+
+.fav-btn.active {
+  opacity: 1 !important;
+  color: var(--gold);
+}
+
+.char-cell:hover .fav-btn,
+.vocab-card:hover .fav-btn,
+.kanji-cell:hover .fav-btn,
+.pinyin-cell:hover .fav-btn,
+.hanzi-cell:hover .fav-btn {
+  opacity: 0.7;
+}
+
+.fav-btn:hover {
+  opacity: 1 !important;
+  transform: scale(1.2);
+}
+
+.fav-btn.active:hover {
+  color: #e6b800;
+}
+
+/* Karakter cell perlu position relative kalau belum punya */
+.char-cell,
+.kanji-cell,
+.pinyin-cell,
+.hanzi-cell {
+  position: relative;
+}
+
+/* Filter favorit di filter-bar */
+.filter-btn.fav-filter.active {
+  background: var(--gold-soft);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* Vocab card fav btn */
+.vocab-card {
+  position: relative;
+}
+
+.vocab-card .fav-btn {
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+}
+
+/* Grammar card fav btn */
+.grammar-card {
+  position: relative;
+}
+
+/* Favorit badge di modal */
+.modal-fav-btn {
+  position: absolute;
+  top: 0;
+  right: 40px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 36px;
+  padding: 0;
+  color: var(--text-3);
+  transition: color 0.15s, transform 0.15s;
+}
+
+.modal-fav-btn.active {
+  color: var(--gold);
+}
+
+.modal-fav-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Stats halaman — favorit section */
+.fav-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.fav-stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fav-stat-icon {
+  font-size: 1.8rem;
+  width: 42px;
+  text-align: center;
+}
+
+.fav-stat-info {
+  flex: 1;
+}
+
+.fav-stat-name {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin-bottom: 2px;
+}
+
+.fav-stat-count {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.fav-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* Dark mode override */
+[data-theme="dark"] .fav-btn {
+  color: #aaa;
+}
+
+[data-theme="dark"] .fav-btn.active {
+  color: var(--gold);
+}
+
+[data-theme="dark"] .modal-fav-btn {
+  color: #888;
+}
+
+[data-theme="dark"] .modal-fav-btn.active {
+  color: var(--gold);
+}
+
+[data-theme="dark"] .fav-stat-card {
+  background: var(--surface);
+  border-color: var(--border);
+}

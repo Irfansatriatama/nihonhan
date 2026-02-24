@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <title>Halaman Tidak Ditemukan - NihonHan</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/transitions.css">
+</head>
+<body>
+<div class="not-found-page fade-in">
+  <div class="not-found-cjk">迷</div>
+  <div class="not-found-code">404</div>
+  <div class="not-found-title">Halaman Tidak Ditemukan</div>
+  <p class="not-found-desc">
+    Sepertinya kamu tersesat. Halaman yang kamu cari tidak ada atau sudah dipindahkan.
+  </p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <a href="pages/dashboard.html" class="btn btn-primary">Ke Dashboard</a>
+    <a href="pages/login.html" class="btn btn-ghost">Masuk</a>
+  </div>
+</div>
+<script src="assets/js/core/storage.js"></script>
+<script src="assets/js/core/auth.js"></script>
+<script>
+  // If logged in, adjust button
+  if (Auth.isLoggedIn()) {
+    document.querySelector('.btn-ghost').style.display = 'none';
+  } else {
+    document.querySelector('.btn-primary').href = 'pages/login.html';
+    document.querySelector('.btn-primary').textContent = 'Masuk';
+    document.querySelector('.btn-ghost').style.display = 'none';
+  }
+</script>
+</body>
+</html>

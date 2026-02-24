@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Dashboard - NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/transitions.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-main">NihonHan</div>
+      <div class="logo-sub">Jepang &amp; Mandarin</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info">
+        <div class="user-name" data-user-name>Pengguna</div>
+        <div class="user-level" data-user-email>-</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="japanese/kanji.html"    data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="japanese/grammar.html"  data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="mandarin/pinyin.html"     data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="mandarin/tones.html"      data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="mandarin/hanzi.html"      data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="mandarin/vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="mandarin/dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="japanese/quiz.html"  data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="mandarin/quiz.html"  data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="profile.html"         data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- Desktop Topbar -->
+    <header class="topbar">
+      <span class="topbar-title">Dashboard</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button>
+      <div class="topbar-actions">
+        <div class="topbar-datetime">
+          <span class="topbar-date-text" id="topbar-date"></span>
+          <span class="topbar-clock" id="topbar-clock"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Topbar -->
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <!-- Page body -->
+    <main class="page-body fade-in">
+
+      <!-- Welcome Banner -->
+      <div class="dashboard-welcome">
+        <span class="cjk-bg" id="welcome-cjk">日</span>
+        <div class="welcome-greeting">Selamat Datang Kembali</div>
+        <div class="welcome-name" id="welcome-name">Pengguna</div>
+        <div class="welcome-quote" id="welcome-quote">Setiap karakter yang kamu pelajari adalah langkah menuju pemahaman yang lebih dalam.</div>
+        <div class="welcome-streak" id="welcome-streak">
+          <span>&#9733;</span>
+          <span id="streak-count">0 hari</span> streak
+        </div>
+        <!-- XP Level Bar (Fase 14) -->
+        <div class="welcome-xp-bar" id="welcome-xp-bar">
+          <div class="xp-level-badge" id="xp-level-badge">Lv.1</div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-track">
+              <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
+            </div>
+            <div class="xp-bar-labels">
+              <span id="xp-label-current">0 XP</span>
+              <span id="xp-label-name">入門 Pemula</span>
+              <span id="xp-label-next">100 XP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card red">
+          <div class="stat-label">Total Dipelajari</div>
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-desc">karakter &amp; kata</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Streak Harian</div>
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-desc">hari berturut-turut</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Quiz Selesai</div>
+          <div class="stat-value" id="stat-quiz">0</div>
+          <div class="stat-desc">sesi latihan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Akurasi Quiz</div>
+          <div class="stat-value" id="stat-accuracy">-</div>
+          <div class="stat-desc">rata-rata jawaban benar</div>
+        </div>
+      </div>
+
+      <!-- Japanese Modules -->
+      <div class="modules-section">
+        <div class="section-header">
+          <div class="section-title">Bahasa Jepang</div>
+          <span class="badge badge-red">5 Modul</span>
+        </div>
+        <div class="module-grid" id="jp-modules">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Mandarin Modules -->
+      <div class="modules-section">
+        <div class="section-header">
+          <div class="section-title">Bahasa Mandarin</div>
+          <span class="badge badge-gold">4 Modul</span>
+        </div>
+        <div class="module-grid" id="zh-modules">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Daily Challenge (Fase 15) -->
+      <div class="challenge-section" id="challenge-section" style="margin-bottom:28px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">🏆 Tantangan Hari Ini</div>
+            <span class="badge badge-gold" id="challenge-status-badge">0/3 Selesai</span>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:16px;">
+            Selesaikan tantangan harian untuk mendapatkan bonus XP. Tantangan baru setiap hari!
+          </p>
+          <div class="challenge-list" id="challenge-list">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Konfeti container (CSS only animation) -->
+      <div class="confetti-wrap" id="confetti-wrap" aria-hidden="true"></div>
+
+      <!-- SRS Due Today -->
+      <div class="srs-due-section" id="srs-due-section" style="display:none;">
+        <div class="card" style="margin-bottom:28px;">
+          <div class="card-header">
+            <div class="card-title">🔁 Kartu SRS Hari Ini</div>
+            <span class="badge badge-red" id="srs-total-badge">0 kartu</span>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:12px;">
+            Kartu yang perlu diulang berdasarkan algoritma Spaced Repetition.
+          </p>
+          <div class="srs-due-grid" id="srs-due-grid"></div>
+        </div>
+      </div>
+
+      <!-- Weekly activity -->
+      <div class="card" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">Aktivitas 7 Hari Terakhir</div>
+          <span class="text-muted" style="font-size:0.8rem;" id="week-total-label">0 sesi</span>
+        </div>
+        <div class="week-chart" id="week-chart"></div>
+      </div>
+
+      <!-- XP & Level Section (Fase 14) -->
+      <div class="card xp-level-card" id="xp-level-section" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">⚡ Level & XP</div>
+          <span class="badge badge-gold" id="xp-total-badge">0 XP</span>
+        </div>
+        <div class="xp-levels-row" id="xp-levels-row">
+          <!-- rendered by JS -->
+        </div>
+        <div style="margin-top:16px;">
+          <div class="section-title" style="font-size:0.85rem;margin-bottom:10px;">Riwayat XP Terbaru</div>
+          <div class="xp-history-list" id="xp-history-list">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily quote -->
+      <div class="daily-quote">
+        <div class="quote-icon" id="quote-char">学</div>
+        <div>
+          <div class="quote-text" id="quote-text">Belajar tanpa berpikir adalah sia-sia. Berpikir tanpa belajar adalah berbahaya.</div>
+          <div class="quote-source" id="quote-source">— Konfusius</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom Nav (Mobile) -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item active" href="dashboard.html" data-page="dashboard">
+        <span class="bnav-icon">&#9632;</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="bottom-nav-item" href="japanese/hiragana.html" data-page="hiragana">
+        <span class="bnav-icon cjk">あ</span>
+        <span>Jepang</span>
+      </a>
+      <a class="bottom-nav-item" href="mandarin/pinyin.html" data-page="pinyin">
+        <span class="bnav-icon cjk">拼</span>
+        <span>Mandarin</span>
+      </a>
+      <a class="bottom-nav-item" href="profile.html" data-page="profile">
+        <span class="bnav-icon">&#128100;</span>
+        <span>Profil</span>
+      </a>
+    </div>
+  </nav>
+
+</div>
+<div id="toast-container"></div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script src="../assets/js/modules/progress.js"></script>
+<script src="../assets/js/modules/srs.js"></script>
+<script src="../assets/js/modules/xp.js"></script>
+<script src="../assets/js/modules/challenge.js"></script>
+<script src="../assets/js/modules/reminder.js"></script>
+<script src="../assets/js/pages/dashboard.js"></script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

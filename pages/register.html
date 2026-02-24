@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Daftar — NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/auth.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="auth-page">
+
+  <!-- ── Left decorative panel ── -->
+  <div class="auth-panel">
+    <span class="auth-panel-cjk c1">語</span>
+    <span class="auth-panel-cjk c2">習</span>
+    <span class="auth-panel-cjk c3">始</span>
+
+    <div class="auth-panel-content">
+      <div class="auth-panel-logo">NihonHan</div>
+      <div class="auth-panel-tagline">Mulai Perjalananmu</div>
+
+      <p class="auth-panel-sub">
+        Gratis, offline, dan selalu siap kapanpun<br>
+        kamu ingin belajar. Tanpa langganan.
+      </p>
+
+      <!-- Character showcase (はじめよう = ayo mulai) -->
+      <div class="auth-panel-chars">
+        <div class="auth-char-card">
+          <span class="char">は</span>
+          <span class="char-label">ha</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">じ</span>
+          <span class="char-label">ji</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">め</span>
+          <span class="char-label">me</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">よ</span>
+          <span class="char-label">yo</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">う</span>
+          <span class="char-label">u</span>
+        </div>
+      </div>
+
+      <!-- Feature list -->
+      <div class="auth-features">
+        <div class="auth-feature-item">
+          <div class="auth-feature-check">&#10003;</div>
+          <span>1000+ item belajar — Hiragana, Katakana, Kanji, Hanzi, Kosakata</span>
+        </div>
+        <div class="auth-feature-item">
+          <div class="auth-feature-check">&#10003;</div>
+          <span>Quiz interaktif dengan feedback instan &amp; 12 badge pencapaian</span>
+        </div>
+        <div class="auth-feature-item">
+          <div class="auth-feature-check">&#10003;</div>
+          <span>Tracking progress, streak harian, dan statistik lengkap</span>
+        </div>
+        <div class="auth-feature-item">
+          <div class="auth-feature-check">&#10003;</div>
+          <span>100% offline — data tersimpan di browser, tidak ke server</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right form panel ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-box">
+
+      <!-- Mobile logo (hidden on desktop) -->
+      <a class="auth-mobile-logo" href="../index.html">
+        <div class="auth-mobile-logo-mark">日</div>
+        <span class="auth-mobile-logo-text">NihonHan</span>
+      </a>
+
+      <!-- Heading -->
+      <div class="auth-heading-area">
+        <div class="auth-eyebrow">Bergabung Gratis</div>
+        <h1 class="form-heading">Buat <span>Akun</span><br>Baru</h1>
+        <p class="form-subheading">Daftar dalam hitungan detik dan langsung mulai belajar.</p>
+      </div>
+
+      <!-- Accent -->
+      <div class="auth-accent">
+        <div class="auth-accent-line"></div>
+        <div class="auth-accent-dot"></div>
+        <div class="auth-accent-line"></div>
+      </div>
+
+      <!-- Form alert -->
+      <div class="form-alert alert-error" id="form-alert">
+        <span class="form-alert-icon">&#9888;</span>
+        <span id="form-alert-msg"></span>
+      </div>
+
+      <!-- Form -->
+      <form id="register-form" novalidate>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label class="form-label" for="name">Nama Lengkap</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#128100;</span>
+            <input
+              type="text" id="name" name="name"
+              class="form-control"
+              placeholder="Nama panggilanmu"
+              autocomplete="name"
+              required>
+          </div>
+          <span class="form-error" id="name-error">&#9888; <span></span></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Alamat Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#9993;</span>
+            <input
+              type="email" id="email" name="email"
+              class="form-control"
+              placeholder="nama@email.com"
+              autocomplete="email"
+              required>
+          </div>
+          <span class="form-error" id="email-error">&#9888; <span></span></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#128274;</span>
+            <input
+              type="password" id="password" name="password"
+              class="form-control"
+              placeholder="Minimal 6 karakter"
+              autocomplete="new-password"
+              required>
+            <span class="input-toggle" id="toggle-pass">&#128065;</span>
+          </div>
+
+          <!-- Strength indicator -->
+          <div class="password-strength" id="strength-wrap">
+            <div class="strength-bars">
+              <div class="strength-bar" id="bar1"></div>
+              <div class="strength-bar" id="bar2"></div>
+              <div class="strength-bar" id="bar3"></div>
+            </div>
+            <div class="strength-text">
+              <span class="strength-label" id="strength-label"></span>
+              <span class="strength-hint" id="strength-hint"></span>
+            </div>
+          </div>
+
+          <span class="form-error" id="pass-error">&#9888; <span></span></span>
+        </div>
+
+        <!-- Confirm password -->
+        <div class="form-group">
+          <label class="form-label" for="confirm">Konfirmasi Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#128275;</span>
+            <input
+              type="password" id="confirm" name="confirm"
+              class="form-control"
+              placeholder="Ulangi password di atas"
+              autocomplete="new-password"
+              required>
+            <span class="input-toggle" id="toggle-confirm">&#128065;</span>
+          </div>
+          <span class="form-error" id="confirm-error">&#9888; <span></span></span>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="register-btn">
+          Buat Akun Sekarang
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <span class="auth-divider-text">sudah punya akun?</span>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <div class="auth-footer-link">
+        <a href="login.html">Masuk ke Akun Lama &rarr;</a>
+      </div>
+
+      <!-- Local notice -->
+      <div class="auth-local-notice">
+        <span class="auth-local-notice-icon">&#128274;</span>
+        <span>Tidak perlu email verifikasi. Data tersimpan lokal di browser ini saja.</span>
+      </div>
+
+    </div>
+  </div><!-- /auth-form-panel -->
+
+</div><!-- /auth-page -->
+
+<div id="toast-container"></div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script>
+  Router.guestOnly();
+
+  const form        = document.getElementById('register-form');
+  const nameEl      = document.getElementById('name');
+  const emailEl     = document.getElementById('email');
+  const passEl      = document.getElementById('password');
+  const confirmEl   = document.getElementById('confirm');
+  const nameErr     = document.getElementById('name-error');
+  const emailErr    = document.getElementById('email-error');
+  const passErr     = document.getElementById('pass-error');
+  const confirmErr  = document.getElementById('confirm-error');
+  const registerBtn = document.getElementById('register-btn');
+  const alertBox    = document.getElementById('form-alert');
+  const alertMsg    = document.getElementById('form-alert-msg');
+
+  // ── Alert helpers ──
+  function showAlert(msg) {
+    alertMsg.textContent = msg;
+    alertBox.classList.add('show');
+  }
+  function hideAlert() { alertBox.classList.remove('show'); }
+
+  // ── Field helpers ──
+  function showFieldError(input, errEl, msg) {
+    input.classList.add('error');
+    input.classList.remove('valid');
+    errEl.querySelector('span').textContent = msg;
+    errEl.classList.add('show');
+  }
+
+  function clearFieldError(input, errEl) {
+    input.classList.remove('error');
+    errEl.classList.remove('show');
+  }
+
+  function setValid(input) {
+    input.classList.remove('error');
+    input.classList.add('valid');
+  }
+
+  // ── Toggle password visibility ──
+  document.getElementById('toggle-pass').addEventListener('click', function() {
+    const isPass = passEl.type === 'password';
+    passEl.type = isPass ? 'text' : 'password';
+    this.innerHTML = isPass ? '&#128064;' : '&#128065;';
+  });
+
+  document.getElementById('toggle-confirm').addEventListener('click', function() {
+    const isPass = confirmEl.type === 'password';
+    confirmEl.type = isPass ? 'text' : 'password';
+    this.innerHTML = isPass ? '&#128064;' : '&#128065;';
+  });
+
+  // ── Password strength ──
+  const strengthWrap  = document.getElementById('strength-wrap');
+  const bars          = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3')];
+  const strengthLabel = document.getElementById('strength-label');
+  const strengthHint  = document.getElementById('strength-hint');
+
+  function checkStrength(val) {
+    let score = 0;
+    if (val.length >= 6)  score++;
+    if (val.length >= 10) score++;
+    if (/[A-Z]/.test(val) || /[0-9]/.test(val) || /[^a-zA-Z0-9]/.test(val)) score++;
+    const levels = [
+      { label: 'Lemah',   hint: 'Tambah angka atau simbol', cls: 'weak' },
+      { label: 'Cukup',   hint: 'Bisa lebih kuat lagi',     cls: 'medium' },
+      { label: 'Kuat',    hint: 'Password sudah kuat!',      cls: 'strong' },
+    ];
+    return { score: Math.max(score, 1), ...levels[Math.max(score - 1, 0)] };
+  }
+
+  passEl.addEventListener('input', () => {
+    clearFieldError(passEl, passErr);
+    hideAlert();
+    const val = passEl.value;
+    if (!val) { strengthWrap.classList.remove('visible'); return; }
+    strengthWrap.classList.add('visible');
+    const { score, label, hint, cls } = checkStrength(val);
+    bars.forEach((b, i) => {
+      b.className = 'strength-bar';
+      if (i < score) b.classList.add(cls);
+    });
+    strengthLabel.textContent = label;
+    strengthHint.textContent  = hint;
+
+    // Live check vs confirm
+    if (confirmEl.value && confirmEl.value === val) {
+      setValid(confirmEl);
+      clearFieldError(confirmEl, confirmErr);
+    }
+  });
+
+  // ── Live blur validation ──
+  nameEl.addEventListener('blur', () => {
+    if (nameEl.value.trim().length >= 2) setValid(nameEl);
+  });
+
+  emailEl.addEventListener('blur', () => {
+    if (emailEl.value.trim() && emailEl.value.includes('@')) setValid(emailEl);
+  });
+
+  confirmEl.addEventListener('input', () => {
+    clearFieldError(confirmEl, confirmErr);
+    if (confirmEl.value && passEl.value && confirmEl.value === passEl.value) {
+      setValid(confirmEl);
+    } else if (confirmEl.value && passEl.value && confirmEl.value !== passEl.value) {
+      confirmEl.classList.remove('valid');
+    }
+  });
+
+  // Clear on input
+  nameEl.addEventListener('input',    () => { clearFieldError(nameEl,    nameErr);    hideAlert(); });
+  emailEl.addEventListener('input',   () => { clearFieldError(emailEl,   emailErr);   hideAlert(); });
+  confirmEl.addEventListener('input', () => { clearFieldError(confirmEl, confirmErr); hideAlert(); });
+
+  // ── Submit ──
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    hideAlert();
+    let hasError = false;
+
+    if (!nameEl.value.trim() || nameEl.value.trim().length < 2) {
+      showFieldError(nameEl, nameErr, 'Nama minimal 2 karakter.');
+      hasError = true;
+    }
+    if (!emailEl.value.trim()) {
+      showFieldError(emailEl, emailErr, 'Email wajib diisi.');
+      hasError = true;
+    } else if (!emailEl.value.includes('@')) {
+      showFieldError(emailEl, emailErr, 'Format email tidak valid.');
+      hasError = true;
+    }
+    if (passEl.value.length < 6) {
+      showFieldError(passEl, passErr, 'Password minimal 6 karakter.');
+      hasError = true;
+    }
+    if (passEl.value !== confirmEl.value) {
+      showFieldError(confirmEl, confirmErr, 'Password tidak cocok.');
+      hasError = true;
+    }
+    if (hasError) return;
+
+    registerBtn.disabled = true;
+    registerBtn.innerHTML = '<span class="spinner"></span>';
+
+    setTimeout(() => {
+      const result = Auth.register({
+        name:     nameEl.value.trim(),
+        email:    emailEl.value.trim(),
+        password: passEl.value,
+      });
+
+      if (result.ok) {
+        Auth.login({ email: emailEl.value.trim(), password: passEl.value });
+        registerBtn.innerHTML = '&#10003; Akun Dibuat!';
+        registerBtn.style.background = '#27AE60';
+        App.toast('Akun berhasil dibuat! Selamat belajar 🎉', 'success');
+        setTimeout(() => Router.go('pages/dashboard.html'), 700);
+      } else {
+        showAlert(result.error || 'Gagal membuat akun. Coba lagi.');
+        registerBtn.disabled = false;
+        registerBtn.innerHTML = 'Buat Akun Sekarang';
+      }
+    }, 350);
+  });
+</script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

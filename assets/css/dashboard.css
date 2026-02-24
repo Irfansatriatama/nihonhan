@@ -1,0 +1,599 @@
+/* ============================================================
+   NIHONHAN - Dashboard CSS
+   ============================================================ */
+
+.dashboard-welcome {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.dashboard-welcome::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(212,175,55,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.dashboard-welcome .cjk-bg {
+  position: absolute;
+  right: 24px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-cjk);
+  font-size: 100px;
+  font-weight: 700;
+  opacity: 0.08;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.welcome-greeting {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.welcome-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.welcome-quote {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+.welcome-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 900px)  { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
+
+/* Module progress cards */
+.modules-section {
+  margin-bottom: 28px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 400px) { .module-grid { grid-template-columns: 1fr; } }
+
+.module-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  cursor: pointer;
+  transition: border-color var(--dur), box-shadow var(--dur), transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.module-card:hover {
+  border-color: var(--red);
+  box-shadow: 0 4px 20px rgba(192,57,43,0.1);
+  transform: translateY(-2px);
+}
+
+.module-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.module-char {
+  font-family: var(--font-cjk);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--red);
+}
+
+.module-badge {
+  font-size: 0.7rem;
+}
+
+.module-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.module-count {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+
+.module-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+/* Quote section */
+.daily-quote {
+  background: var(--gold-soft);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.quote-icon {
+  font-family: var(--font-cjk);
+  font-size: 2.5rem;
+  color: var(--gold-dark);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.quote-source {
+  font-size: 0.78rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   FASE 14 — XP & Level System
+   ============================================================ */
+
+/* Welcome XP bar */
+.welcome-xp-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  max-width: 420px;
+}
+
+.xp-level-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--gold);
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+
+.xp-bar-wrap {
+  flex: 1;
+}
+
+.xp-bar-track {
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #f39c12);
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.xp-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 3px;
+}
+
+/* XP section card */
+.xp-level-card {}
+
+/* Level progression dots */
+.xp-levels-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 8px 0 4px;
+  scrollbar-width: none;
+}
+.xp-levels-row::-webkit-scrollbar { display: none; }
+
+.xp-level-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 52px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.xp-level-dot.passed,
+.xp-level-dot.active {
+  opacity: 1;
+}
+
+.xp-dot-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.xp-level-dot.active .xp-dot-circle {
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.25);
+  transform: scale(1.15);
+}
+
+.xp-dot-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-cjk);
+  text-align: center;
+}
+
+.xp-dot-sublabel {
+  font-size: 0.62rem;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.xp-level-connector {
+  width: 24px;
+  height: 2px;
+  background: var(--border);
+  margin-top: 17px;
+  flex-shrink: 0;
+}
+
+/* XP History */
+.xp-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.xp-history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+}
+
+.xp-history-label {
+  flex: 1;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.xp-history-date {
+  color: var(--text-3);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.xp-history-amount {
+  color: #27ae60;
+  font-weight: 700;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+  min-width: 48px;
+  text-align: right;
+}
+
+.xp-history-empty {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  text-align: center;
+  padding: 16px;
+}
+
+/* Toast XP (Fase 14) */
+/* (added to components.css via app CSS) */
+
+/* Dark mode overrides */
+[data-theme="dark"] .xp-bar-track {
+  background: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .xp-dot-circle {
+  background: #2a2a35;
+  border-color: #3a3a4a;
+}
+
+[data-theme="dark"] .xp-history-item {
+  background: #13131a;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Fase 15 — Daily Challenge
+   ═══════════════════════════════════════════════════════════════ */
+
+.challenge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.challenge-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.challenge-item.completed {
+  border-color: var(--gold, #f39c12);
+  background: linear-gradient(135deg, rgba(243,156,18,0.06), rgba(212,175,55,0.04));
+}
+
+.challenge-icon {
+  font-size: 1.8rem;
+  min-width: 40px;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.challenge-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.challenge-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.challenge-xp-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.challenge-desc {
+  font-size: 0.82rem;
+  color: var(--text-3);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.challenge-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.challenge-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.challenge-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f39c12, #e74c3c);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.challenge-progress-label {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.challenge-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 72px;
+}
+
+.challenge-claim-btn {
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.challenge-claim-btn:hover {
+  opacity: 0.88;
+  transform: scale(1.04);
+}
+
+.challenge-done-check {
+  font-size: 1.4rem;
+}
+
+.challenge-status-pending {
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ── Konfeti ── */
+.confetti-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] .challenge-item {
+  background: #1a1a22;
+  border-color: #2e2e3a;
+}
+
+[data-theme="dark"] .challenge-item.completed {
+  background: linear-gradient(135deg, rgba(243,156,18,0.1), rgba(212,175,55,0.07));
+  border-color: rgba(243,156,18,0.4);
+}
+
+[data-theme="dark"] .challenge-progress-bar {
+  background: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 600px) {
+  .challenge-item {
+    gap: 8px;
+    padding: 12px;
+  }
+  .challenge-icon {
+    font-size: 1.5rem;
+    min-width: 32px;
+  }
+  .challenge-action {
+    min-width: 60px;
+  }
+}
+
+/* ── Topbar DateTime & Live Clock (Fase 20.4) ── */
+.topbar-datetime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  line-height: 1.3;
+}
+
+.topbar-date-text {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.topbar-clock {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .topbar-clock {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .topbar-datetime { display: none; }
+}

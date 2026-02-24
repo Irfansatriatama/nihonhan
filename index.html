@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NihonHan — Belajar Jepang & Mandarin</title>
+  <!-- PWA Fase 20 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <meta name="description" content="Belajar Bahasa Jepang & Mandarin. Offline-first, gratis, langsung di browser.">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    body {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; background: var(--bg);
+    }
+    .splash {
+      text-align: center;
+      animation: fadeIn 0.5s var(--ease) both;
+    }
+    .splash-logo {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: -1px;
+    }
+    .splash-chars {
+      font-family: var(--font-cjk);
+      font-size: 1.5rem;
+      color: var(--gold-dark);
+      margin-top: 8px;
+      letter-spacing: 8px;
+    }
+    .splash-loading {
+      margin-top: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      color: var(--text-3); font-size: 0.85rem;
+    }
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+  </style>
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="splash">
+    <div class="splash-logo">NihonHan</div>
+    <div class="splash-chars">日 漢 語 学</div>
+    <div class="splash-loading">
+      <div class="spinner"></div>
+      <span>Memuat...</span>
+    </div>
+  </div>
+
+  <script src="assets/js/core/storage.js"></script>
+  <script src="assets/js/core/auth.js"></script>
+  <script src="assets/js/core/router.js"></script>
+  <script src="assets/js/core/app.js"></script>
+  <script>
+    // Redirect after brief splash
+    setTimeout(() => {
+      if (Auth.isLoggedIn()) {
+        window.location.href = 'pages/dashboard.html';
+      } else {
+        window.location.href = 'pages/login.html';
+      }
+    }, 800);
+  </script>
+
+  <!-- Fase 20: Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(reg => {
+            console.log('[NihonHan] Service Worker terdaftar:', reg.scope);
+            // Cek update SW baru
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[NihonHan] Update tersedia — reload untuk menerapkan.');
+                }
+              });
+            });
+          })
+          .catch(err => console.warn('[NihonHan] SW gagal:', err));
+      });
+    }
+  </script>
+</body>
+</html>

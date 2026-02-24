@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Laporan Progress - NihonHan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=Noto+Sans+JP&family=Noto+Sans+SC&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/report.css">
+  <script>
+    // Apply theme before render
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Loading screen -->
+  <div id="report-loading">
+    <div class="loading-inner">
+      <div class="loading-logo">NihonHan</div>
+      <div class="loading-sub">Menyiapkan laporan...</div>
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Report content -->
+  <div id="report-wrap" style="display:none;">
+
+    <!-- Screen-only toolbar -->
+    <div class="report-toolbar no-print">
+      <div class="toolbar-left">
+        <button class="toolbar-btn back-btn" onclick="history.back()">← Kembali</button>
+        <span class="toolbar-title">Laporan Progress Belajar</span>
+      </div>
+      <div class="toolbar-right">
+        <span class="toolbar-hint">💡 Pastikan "Background graphics" diaktifkan saat print</span>
+        <button class="toolbar-btn print-btn" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+      </div>
+    </div>
+
+    <!-- Report document -->
+    <div class="report-doc">
+
+      <!-- Header -->
+      <header class="report-header">
+        <div class="report-logo-wrap">
+          <div class="report-logo">NihonHan</div>
+          <div class="report-logo-sub">日本語 &amp; 中文</div>
+        </div>
+        <div class="report-header-right">
+          <div class="report-title">Laporan Progress Belajar</div>
+          <div class="report-date" id="report-date"></div>
+        </div>
+      </header>
+
+      <!-- User info -->
+      <section class="report-user-card">
+        <div class="report-avatar" id="report-avatar">日</div>
+        <div class="report-user-info">
+          <div class="report-user-name" id="report-name">-</div>
+          <div class="report-user-email" id="report-email">-</div>
+          <div class="report-user-since" id="report-since">-</div>
+        </div>
+        <div class="report-level-badge" id="report-level-badge">
+          <div class="level-badge-jp" id="report-level-jp">入門</div>
+          <div class="level-badge-id" id="report-level-id">Pemula</div>
+          <div class="level-badge-xp" id="report-level-xp">0 XP</div>
+        </div>
+      </section>
+
+      <!-- Summary stats -->
+      <section class="report-section">
+        <h2 class="report-section-title">📊 Ringkasan Pencapaian</h2>
+        <div class="summary-grid" id="summary-grid">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- XP Progress -->
+      <section class="report-section">
+        <h2 class="report-section-title">⚡ Progress Level &amp; XP</h2>
+        <div class="xp-level-row" id="xp-level-row">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Module progress -->
+      <section class="report-section">
+        <h2 class="report-section-title">📚 Progress Per Modul</h2>
+        <div class="module-list" id="module-list">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Activity heatmap -->
+      <section class="report-section">
+        <h2 class="report-section-title">📅 Aktivitas Belajar (28 Hari Terakhir)</h2>
+        <div class="heatmap-wrap" id="heatmap-wrap">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Badges -->
+      <section class="report-section">
+        <h2 class="report-section-title">🏅 Badge yang Diraih</h2>
+        <div class="badges-grid" id="badges-grid">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Recent quiz -->
+      <section class="report-section">
+        <h2 class="report-section-title">📝 Riwayat Quiz Terbaru</h2>
+        <div class="quiz-table-wrap">
+          <table class="quiz-table" id="quiz-table">
+            <thead>
+              <tr>
+                <th>Modul</th>
+                <th>Skor</th>
+                <th>Akurasi</th>
+                <th>Tanggal</th>
+              </tr>
+            </thead>
+            <tbody id="quiz-tbody">
+              <!-- filled by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Recent learned -->
+      <section class="report-section">
+        <h2 class="report-section-title">✅ Item yang Telah Dipelajari</h2>
+        <div class="learned-summary" id="learned-summary">
+          <!-- filled by JS -->
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="report-footer">
+        <div class="footer-logo">NihonHan</div>
+        <div class="footer-tagline">Belajar itu indah, satu karakter dalam satu waktu.</div>
+        <div class="footer-url">nihonhan.app · Pure localStorage · 100% Offline</div>
+      </footer>
+
+    </div><!-- /.report-doc -->
+  </div><!-- /#report-wrap -->
+
+  <!-- Scripts (no Router/App — standalone page) -->
+  <script src="../assets/js/core/storage.js"></script>
+  <script src="../assets/js/core/auth.js"></script>
+  <script src="../assets/js/modules/xp.js"></script>
+  <script src="../assets/js/modules/challenge.js"></script>
+  <script src="../assets/js/modules/progress.js"></script>
+  <script src="../assets/js/pages/report.js"></script>
+
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

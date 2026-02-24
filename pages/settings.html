@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Pengaturan - NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/transitions.css">
+  <link rel="stylesheet" href="../assets/css/settings.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-main">NihonHan</div>
+      <div class="logo-sub">Jepang &amp; Mandarin</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info">
+        <div class="user-name" data-user-name>Pengguna</div>
+        <div class="user-level" data-user-email>-</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="japanese/kanji.html"    data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="japanese/grammar.html"  data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="mandarin/pinyin.html"     data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="mandarin/tones.html"      data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="mandarin/hanzi.html"      data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="mandarin/vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="mandarin/dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="japanese/quiz.html"  data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="mandarin/quiz.html"  data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="profile.html"         data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- Desktop Topbar -->
+    <header class="topbar">
+      <span class="topbar-title">Pengaturan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button>
+    </header>
+
+    <!-- Mobile Topbar -->
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <!-- Page body -->
+    <main class="page-body fade-in">
+
+      <!-- Tampilan -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#127759; Tampilan</div>
+
+        <div class="settings-card">
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Mode Gelap (Dark Mode) 🌙</div>
+              <div class="settings-row-desc">Aktifkan tema gelap untuk kenyamanan belajar di malam hari</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-darkmode">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Tampilkan Romaji</div>
+              <div class="settings-row-desc">Tampilkan romaji di bawah karakter Hiragana dan Katakana</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-romaji">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Tampilkan Pinyin</div>
+              <div class="settings-row-desc">Tampilkan pinyin di bawah karakter Hanzi</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-pinyin">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Animasi Kartu</div>
+              <div class="settings-row-desc">Aktifkan animasi flip 3D pada flashcard</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-animation" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio & Pelafalan -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#128266; Audio &amp; Pelafalan</div>
+
+        <div class="settings-card">
+          <div id="audio-not-supported" style="display:none;">
+            <p style="color:var(--text-2);font-size:0.875rem;">&#9888; Browser Anda tidak mendukung Web Speech API untuk fitur audio.</p>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Auto-play saat buka kartu</div>
+              <div class="settings-row-desc">Karakter/kata diucapkan otomatis saat modal dibuka</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-autoplay">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row" style="align-items:center;">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Tes Suara</div>
+              <div class="settings-row-desc">Klik tombol untuk mendengar suara Jepang & Mandarin</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button class="btn btn-outline btn-sm" id="test-jp-voice">&#127482;&#127479; JP</button>
+              <button class="btn btn-outline btn-sm" id="test-zh-voice">&#127464;&#127475; ZH</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#9733; Quiz & Latihan</div>
+
+        <div class="settings-card">
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Timer Quiz</div>
+              <div class="settings-row-desc">Aktifkan countdown timer 20 detik per soal</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-timer" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Streak Reminder -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#128276; Pengingat Streak</div>
+
+        <div class="settings-card">
+          <div id="reminder-not-supported" style="display:none;">
+            <p style="color:var(--text-2);font-size:0.875rem;">&#9888; Browser Anda tidak mendukung Web Notifications API. Coba Chrome atau Firefox.</p>
+          </div>
+
+          <div id="reminder-denied-msg" style="display:none;">
+            <p style="color:var(--text-2);font-size:0.875rem;">&#128683; Izin notifikasi ditolak. Buka pengaturan browser untuk mengizinkan notifikasi dari halaman ini.</p>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Aktifkan Pengingat Belajar</div>
+              <div class="settings-row-desc">Dapatkan notifikasi harian agar tidak lupa belajar dan streak tidak putus</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-reminder">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row" id="reminder-time-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Waktu Pengingat</div>
+              <div class="settings-row-desc">Pilih jam saat notifikasi akan muncul setiap hari</div>
+            </div>
+            <input type="time" id="reminder-time-input" class="reminder-time-input" value="20:00">
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row" style="align-items:center;">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Tes Notifikasi</div>
+              <div class="settings-row-desc">Klik untuk melihat contoh notifikasi pengingat</div>
+            </div>
+            <button class="btn btn-outline btn-sm" id="btn-test-reminder">Tes Sekarang</button>
+          </div>
+
+          <div id="reminder-status" class="reminder-status-bar" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- PWA / Aplikasi -->
+      <div class="settings-section">
+        <div class="settings-section-title">📲 Aplikasi (PWA)</div>
+        <div class="settings-card">
+          <div class="settings-row" style="align-items:center;">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Status Instalasi</div>
+              <div class="settings-row-desc" id="pwa-install-status">Memeriksa...</div>
+            </div>
+            <button class="btn btn-outline btn-sm" id="btn-pwa-install" style="display:none;">Install App</button>
+          </div>
+          <div class="settings-divider"></div>
+          <div class="settings-row" style="align-items:center;">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Mode Offline</div>
+              <div class="settings-row-desc" id="pwa-offline-status">Memeriksa cache...</div>
+            </div>
+            <span id="pwa-online-badge" style="
+              padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600;
+              background:var(--green,#27ae60); color:white;
+            ">Online</span>
+          </div>
+          <div class="settings-divider"></div>
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <div class="settings-row-label">Cara Menggunakan Offline</div>
+              <div class="settings-row-desc">Setelah install, NihonHan bisa dibuka tanpa internet. Data belajar tersimpan di perangkat. Semua fitur tersedia offline.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reset Progress -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#9888; Reset Progress</div>
+
+        <div class="settings-card">
+          <p class="settings-warn-text">Perhatian: Reset tidak dapat dibatalkan. Progress belajar pada modul yang dipilih akan dihapus permanen.</p>
+
+          <div class="reset-grid" id="reset-grid">
+            <!-- rendered by JS -->
+          </div>
+
+          <div class="settings-divider"></div>
+
+          <div class="settings-row" style="align-items:center;">
+            <div class="settings-row-info">
+              <div class="settings-row-label" style="color:var(--red);">Reset Semua Progress</div>
+              <div class="settings-row-desc">Hapus seluruh data belajar dan quiz di semua modul</div>
+            </div>
+            <button class="btn btn-danger btn-sm" id="btn-reset-all">Reset Semua</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tentang -->
+      <div class="settings-section">
+        <div class="settings-section-title">&#8505; Tentang Aplikasi</div>
+        <div class="settings-card">
+          <div class="about-app">
+            <div class="about-logo cjk">日</div>
+            <div class="about-info">
+              <div class="about-name">NihonHan</div>
+              <div class="about-version">Versi 2.1 — Fase 18 (Streak Reminder)</div>
+              <div class="about-desc">Aplikasi belajar Bahasa Jepang & Mandarin offline. Pure localStorage, tanpa server.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom Nav (Mobile) -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="dashboard.html" data-page="dashboard">
+        <span class="bnav-icon">&#9632;</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="bottom-nav-item" href="japanese/hiragana.html" data-page="hiragana">
+        <span class="bnav-icon cjk">あ</span>
+        <span>Jepang</span>
+      </a>
+      <a class="bottom-nav-item" href="mandarin/pinyin.html" data-page="pinyin">
+        <span class="bnav-icon cjk">拼</span>
+        <span>Mandarin</span>
+      </a>
+      <a class="bottom-nav-item active" href="settings.html" data-page="settings">
+        <span class="bnav-icon">&#9881;</span>
+        <span>Pengaturan</span>
+      </a>
+    </div>
+  </nav>
+
+</div>
+<div id="toast-container"></div>
+
+<!-- Confirm Dialog -->
+<div class="confirm-backdrop" id="confirm-backdrop">
+  <div class="confirm-dialog">
+    <div class="confirm-icon">&#9888;</div>
+    <div class="confirm-title" id="confirm-title">Konfirmasi</div>
+    <div class="confirm-msg" id="confirm-msg">Apakah Anda yakin?</div>
+    <div class="confirm-actions">
+      <button class="btn btn-outline" id="confirm-cancel">Batal</button>
+      <button class="btn btn-danger" id="confirm-ok">Reset</button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script src="../assets/js/modules/audio.js"></script>
+<script src="../assets/js/modules/reminder.js"></script>
+<script src="../assets/js/pages/settings.js"></script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

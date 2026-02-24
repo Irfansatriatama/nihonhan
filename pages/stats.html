@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Statistik - NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/transitions.css">
+  <link rel="stylesheet" href="../assets/css/settings.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-main">NihonHan</div>
+      <div class="logo-sub">Jepang &amp; Mandarin</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info">
+        <div class="user-name" data-user-name>Pengguna</div>
+        <div class="user-level" data-user-email>-</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="japanese/kanji.html"    data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="japanese/grammar.html"  data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="mandarin/pinyin.html"     data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="mandarin/tones.html"      data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="mandarin/hanzi.html"      data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="mandarin/vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="mandarin/dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="japanese/quiz.html"  data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="mandarin/quiz.html"  data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="profile.html"         data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- Desktop Topbar -->
+    <header class="topbar">
+      <span class="topbar-title">Statistik</span>
+      <div class="topbar-actions">
+        <a href="report.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--red);color:#fff;border-radius:8px;font-size:0.82rem;font-weight:600;text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='var(--red-dark)'" onmouseout="this.style.background='var(--red)'">🖨️ Ekspor PDF</a>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button>
+      </div>
+    </header>
+
+    <!-- Mobile Topbar -->
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <!-- Page body -->
+    <main class="page-body fade-in">
+
+      <!-- Summary stats -->
+      <div class="stats-grid" style="margin-bottom:28px;">
+        <div class="stat-card red">
+          <div class="stat-label">Total Dipelajari</div>
+          <div class="stat-value" id="s-total">0</div>
+          <div class="stat-desc">karakter &amp; kata</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Streak Tertinggi</div>
+          <div class="stat-value" id="s-streak">0</div>
+          <div class="stat-desc">hari berturut-turut</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Quiz Selesai</div>
+          <div class="stat-value" id="s-quiz">0</div>
+          <div class="stat-desc">total sesi</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Akurasi Rata-rata</div>
+          <div class="stat-value" id="s-accuracy">-</div>
+          <div class="stat-desc">dari seluruh quiz</div>
+        </div>
+      </div>
+
+      <!-- Progress per modul -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Progress per Modul</div>
+        </div>
+        <div id="module-progress-list"></div>
+      </div>
+
+      <!-- Quiz history -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Riwayat Quiz (10 Terakhir)</div>
+          <span class="text-muted" style="font-size:0.8rem;" id="quiz-avg-label"></span>
+        </div>
+        <div id="quiz-history-list">
+          <div class="empty-state">Belum ada riwayat quiz.</div>
+        </div>
+      </div>
+
+      <!-- Badge earned -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <div class="card-title">Badge Diraih</div>
+          <span class="badge badge-gold" id="badge-count-label">0 / 12</span>
+        </div>
+        <div id="badge-stats-grid" class="badge-stats-grid"></div>
+      </div>
+
+      <!-- Heatmap 4 minggu -->
+      <div class="card" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">Aktivitas 28 Hari Terakhir</div>
+          <span class="text-muted" style="font-size:0.8rem;" id="heatmap-total-label"></span>
+        </div>
+        <div class="heatmap-wrap">
+          <div class="heatmap-grid" id="heatmap-grid"></div>
+          <div class="heatmap-legend">
+            <span class="text-muted" style="font-size:0.7rem;">Kurang</span>
+            <div class="heatmap-cell level-0"></div>
+            <div class="heatmap-cell level-1"></div>
+            <div class="heatmap-cell level-2"></div>
+            <div class="heatmap-cell level-3"></div>
+            <div class="heatmap-cell level-4"></div>
+            <span class="text-muted" style="font-size:0.7rem;">Banyak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- XP & Level (Fase 14) -->
+      <div class="card" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">⚡ XP & Level</div>
+          <span class="badge badge-gold" id="stats-xp-total">0 XP</span>
+        </div>
+        <div id="stats-xp-progress" style="margin-bottom:16px;">
+          <!-- Level progress bar rendered by JS -->
+        </div>
+        <div class="stats-xp-history" id="stats-xp-history">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Favorit & Bookmark -->
+      <div class="card" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">&#9733; Favorit & Bookmark</div>
+          <span class="text-muted" style="font-size:0.8rem;">Total: <strong id="fav-total">0</strong> item difavoritkan</span>
+        </div>
+        <div class="fav-stats-grid" id="fav-stats-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Challenge History (Fase 15) -->
+      <div class="card" style="margin-bottom:28px;">
+        <div class="card-header">
+          <div class="card-title">🏆 Riwayat Challenge Harian</div>
+          <span class="badge badge-gold" id="challenge-history-badge">0 Selesai</span>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:12px;">
+          Challenge harian yang berhasil diselesaikan dan diklaim.
+        </p>
+        <div id="challenge-history-list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+  </div>
+
+  <!-- Bottom Nav (Mobile) -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="dashboard.html" data-page="dashboard">
+        <span class="bnav-icon">&#9632;</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="bottom-nav-item" href="japanese/hiragana.html" data-page="hiragana">
+        <span class="bnav-icon cjk">あ</span>
+        <span>Jepang</span>
+      </a>
+      <a class="bottom-nav-item" href="mandarin/pinyin.html" data-page="pinyin">
+        <span class="bnav-icon cjk">拼</span>
+        <span>Mandarin</span>
+      </a>
+      <a class="bottom-nav-item active" href="stats.html" data-page="stats">
+        <span class="bnav-icon">&#128202;</span>
+        <span>Statistik</span>
+      </a>
+    </div>
+  </nav>
+
+</div>
+<div id="toast-container"></div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script src="../assets/js/modules/progress.js"></script>
+<script src="../assets/js/modules/xp.js"></script>
+<script src="../assets/js/modules/challenge.js"></script>
+<script src="../assets/js/pages/stats.js"></script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

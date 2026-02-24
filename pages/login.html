@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Masuk — NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/auth.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="auth-page">
+
+  <!-- ── Left decorative panel ── -->
+  <div class="auth-panel">
+    <span class="auth-panel-cjk c1">日</span>
+    <span class="auth-panel-cjk c2">語</span>
+    <span class="auth-panel-cjk c3">学</span>
+
+    <div class="auth-panel-content">
+      <div class="auth-panel-logo">NihonHan</div>
+      <div class="auth-panel-tagline">Belajar Jepang &amp; Mandarin</div>
+
+      <p class="auth-panel-sub">
+        Satu platform untuk menguasai Hiragana, Katakana,<br>
+        Kanji, Pinyin, dan Hanzi — dari mana saja, kapan saja.
+      </p>
+
+      <!-- Character showcase -->
+      <div class="auth-panel-chars">
+        <div class="auth-char-card">
+          <span class="char">あ</span>
+          <span class="char-label">Hiragana</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">ア</span>
+          <span class="char-label">Katakana</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">漢</span>
+          <span class="char-label">Kanji</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">汉</span>
+          <span class="char-label">Hanzi</span>
+        </div>
+        <div class="auth-char-card">
+          <span class="char">拼</span>
+          <span class="char-label">Pinyin</span>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="auth-panel-stats">
+        <div class="auth-stat-item">
+          <div class="auth-stat-num">1000+</div>
+          <div class="auth-stat-lbl">Item Belajar</div>
+        </div>
+        <div class="auth-stat-item">
+          <div class="auth-stat-num">9</div>
+          <div class="auth-stat-lbl">Modul</div>
+        </div>
+        <div class="auth-stat-item">
+          <div class="auth-stat-num">12</div>
+          <div class="auth-stat-lbl">Badge</div>
+        </div>
+        <div class="auth-stat-item">
+          <div class="auth-stat-num">100%</div>
+          <div class="auth-stat-lbl">Offline</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right form panel ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-box">
+
+      <!-- Mobile logo (hidden on desktop) -->
+      <a class="auth-mobile-logo" href="../index.html">
+        <div class="auth-mobile-logo-mark">日</div>
+        <span class="auth-mobile-logo-text">NihonHan</span>
+      </a>
+
+      <!-- Heading -->
+      <div class="auth-heading-area">
+        <div class="auth-eyebrow">Selamat Datang Kembali</div>
+        <h1 class="form-heading">Masuk ke<br><span>Akunmu</span></h1>
+        <p class="form-subheading">Lanjutkan perjalanan belajarmu dari terakhir kali.</p>
+      </div>
+
+      <!-- Accent -->
+      <div class="auth-accent">
+        <div class="auth-accent-line"></div>
+        <div class="auth-accent-dot"></div>
+        <div class="auth-accent-line"></div>
+      </div>
+
+      <!-- Form alert -->
+      <div class="form-alert alert-error" id="form-alert">
+        <span class="form-alert-icon">&#9888;</span>
+        <span id="form-alert-msg"></span>
+      </div>
+
+      <!-- Form -->
+      <form id="login-form" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Alamat Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#9993;</span>
+            <input
+              type="email" id="email" name="email"
+              class="form-control"
+              placeholder="nama@email.com"
+              autocomplete="email"
+              required>
+          </div>
+          <span class="form-error" id="email-error">&#9888; <span></span></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">
+            Password
+          </label>
+          <div class="input-wrapper">
+            <span class="input-icon">&#128274;</span>
+            <input
+              type="password" id="password" name="password"
+              class="form-control"
+              placeholder="Password kamu"
+              autocomplete="current-password"
+              required>
+            <span class="input-toggle" id="toggle-pass" title="Tampilkan password">&#128065;</span>
+          </div>
+          <span class="form-error" id="pass-error">&#9888; <span></span></span>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="login-btn">
+          Masuk
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <span class="auth-divider-text">belum punya akun?</span>
+        <div class="auth-divider-line"></div>
+      </div>
+
+      <div class="auth-footer-link">
+        <a href="register.html">Daftar Gratis Sekarang &rarr;</a>
+      </div>
+
+      <!-- Local notice -->
+      <div class="auth-local-notice">
+        <span class="auth-local-notice-icon">&#128274;</span>
+        <span>Data kamu tersimpan secara lokal di browser ini. Tidak ada server, tidak ada cloud.</span>
+      </div>
+
+    </div>
+  </div><!-- /auth-form-panel -->
+
+</div><!-- /auth-page -->
+
+<div id="toast-container"></div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script>
+  Router.guestOnly();
+
+  const form     = document.getElementById('login-form');
+  const emailEl  = document.getElementById('email');
+  const passEl   = document.getElementById('password');
+  const emailErr = document.getElementById('email-error');
+  const passErr  = document.getElementById('pass-error');
+  const loginBtn = document.getElementById('login-btn');
+  const toggle   = document.getElementById('toggle-pass');
+  const alertBox = document.getElementById('form-alert');
+  const alertMsg = document.getElementById('form-alert-msg');
+
+  // ── Helper: show/hide alert box ──
+  function showAlert(msg) {
+    alertMsg.textContent = msg;
+    alertBox.classList.add('show');
+  }
+  function hideAlert() {
+    alertBox.classList.remove('show');
+  }
+
+  // ── Helper: show field error ──
+  function showFieldError(input, errEl, msg) {
+    input.classList.add('error');
+    input.classList.remove('valid');
+    errEl.querySelector('span').textContent = msg;
+    errEl.classList.add('show');
+  }
+
+  function clearFieldError(input, errEl) {
+    input.classList.remove('error');
+    errEl.classList.remove('show');
+  }
+
+  function setValid(input) {
+    input.classList.remove('error');
+    input.classList.add('valid');
+  }
+
+  // ── Toggle password visibility ──
+  toggle.addEventListener('click', () => {
+    const isPass = passEl.type === 'password';
+    passEl.type  = isPass ? 'text' : 'password';
+    toggle.innerHTML = isPass ? '&#128064;' : '&#128065;';
+    toggle.title = isPass ? 'Sembunyikan password' : 'Tampilkan password';
+  });
+
+  // ── Live validation on blur ──
+  emailEl.addEventListener('blur', () => {
+    if (emailEl.value.trim() && !emailEl.value.includes('@')) {
+      showFieldError(emailEl, emailErr, 'Format email tidak valid.');
+    } else if (emailEl.value.trim()) {
+      setValid(emailEl);
+      clearFieldError(emailEl, emailErr);
+    }
+  });
+
+  emailEl.addEventListener('input', () => { clearFieldError(emailEl, emailErr); hideAlert(); });
+  passEl.addEventListener('input',  () => { clearFieldError(passEl, passErr);   hideAlert(); });
+
+  // ── Submit ──
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    hideAlert();
+    let hasError = false;
+
+    if (!emailEl.value.trim()) {
+      showFieldError(emailEl, emailErr, 'Email wajib diisi.');
+      hasError = true;
+    }
+    if (!passEl.value) {
+      showFieldError(passEl, passErr, 'Password wajib diisi.');
+      hasError = true;
+    }
+    if (hasError) return;
+
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span class="spinner"></span>';
+
+    setTimeout(() => {
+      const result = Auth.login({
+        email:    emailEl.value.trim(),
+        password: passEl.value,
+      });
+
+      if (result.ok) {
+        loginBtn.innerHTML = '&#10003; Berhasil!';
+        loginBtn.style.background = '#27AE60';
+        App.toast('Selamat datang kembali!', 'success');
+        setTimeout(() => Router.go('pages/dashboard.html'), 600);
+      } else {
+        showAlert(result.error || 'Email atau password salah.');
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = 'Masuk';
+      }
+    }, 350);
+  });
+</script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

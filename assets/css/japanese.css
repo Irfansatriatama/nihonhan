@@ -1,0 +1,756 @@
+/* ============================================================
+   NIHONHAN - Japanese Module CSS
+   Tabel karakter, flashcard 3D, tabs, detail modal
+   ============================================================ */
+
+/* ── Page header strip ── */
+.module-page-header {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  border-radius: var(--radius-xl);
+  padding: 24px 28px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-page-header::before {
+  content: attr(data-cjk);
+  position: absolute; right: 20px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-cjk);
+  font-size: 90px; font-weight: 700;
+  opacity: 0.08; line-height: 1;
+  pointer-events: none; user-select: none;
+}
+
+.module-page-header h1 {
+  font-size: 1.4rem; font-weight: 700;
+  font-family: var(--font-display);
+  color: #fff;
+}
+
+.module-page-header p {
+  font-size: 0.85rem; opacity: 0.8; margin-top: 4px;
+}
+
+.module-header-progress {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+  flex-shrink: 0;
+}
+
+.module-header-pct {
+  font-size: 1.8rem; font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--gold-light);
+}
+
+.module-header-sub {
+  font-size: 0.75rem; opacity: 0.75;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.tab-btn {
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background var(--dur), color var(--dur), box-shadow var(--dur);
+  border: none; background: none;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  background: var(--surface);
+  color: var(--red);
+  box-shadow: 0 1px 4px var(--shadow);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Filter buttons ── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-3);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all var(--dur);
+  font-family: var(--font-body);
+}
+
+.filter-btn:hover  { border-color: var(--red); color: var(--red); }
+.filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ── Character grid ── */
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .char-grid { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 7px; }
+}
+
+.char-cell {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 6px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--dur), background var(--dur), transform 0.15s;
+  position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+
+.char-cell:hover {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.char-cell.learned {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+
+.char-cell.learned::after {
+  content: '';
+  position: absolute; top: 6px; right: 6px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.char-main {
+  font-family: var(--font-cjk);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--text);
+}
+
+.char-cell.learned .char-main { color: var(--red-dark); }
+
+.char-romaji {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.3px;
+}
+
+/* ── Character detail modal ── */
+.char-detail-content {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.char-detail-big {
+  font-family: var(--font-cjk);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--red);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.char-detail-romaji {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.char-detail-type {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.char-detail-example {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  text-align: left;
+}
+
+.char-detail-example .ex-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.char-detail-example .ex-word {
+  font-family: var(--font-cjk);
+  font-size: 1.5rem;
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.char-detail-example .ex-reading {
+  font-size: 0.85rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+}
+
+.char-detail-example .ex-meaning {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* ── Flashcard ── */
+.fc-wrapper {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+  padding: 8px 0 24px;
+}
+
+.fc-progress-bar {
+  width: 100%; max-width: 420px;
+  height: 6px; background: var(--border);
+  border-radius: 99px; overflow: hidden;
+}
+
+.fc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.fc-counter {
+  font-size: 0.8rem; color: var(--text-3); font-weight: 600;
+}
+
+/* 3D scene */
+.fc-scene {
+  width: 260px; height: 300px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .fc-scene { width: 220px; height: 260px; }
+}
+
+.fc-card {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  border-radius: var(--radius-xl);
+}
+
+.fc-card.flipped { transform: rotateY(180deg); }
+
+.fc-face {
+  position: absolute; inset: 0;
+  border-radius: var(--radius-xl);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; padding: 24px;
+  box-shadow: 0 8px 32px var(--shadow-md);
+}
+
+.fc-front {
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+
+.fc-back {
+  background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 100%);
+  border: 2px solid var(--red);
+  transform: rotateY(180deg);
+  color: #fff;
+}
+
+.fc-char {
+  font-size: 5rem; line-height: 1;
+  color: var(--red);
+}
+
+.fc-type-badge {
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--text-3);
+  background: var(--surface-2);
+  padding: 3px 10px; border-radius: 99px;
+}
+
+.fc-learned-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--red); color: #fff;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 99px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.fc-back .fc-learned-badge {
+  background: rgba(255,255,255,0.25);
+}
+
+.fc-romaji {
+  font-family: var(--font-display);
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.fc-example {
+  text-align: center;
+  display: flex; flex-direction: column; gap: 3px;
+}
+
+.fc-example .cjk { font-size: 1.3rem; color: #fff; }
+.fc-reading  { font-size: 0.8rem; opacity: 0.8; color: var(--gold-light); }
+.fc-meaning  { font-size: 0.85rem; opacity: 0.9; }
+
+.fc-hint {
+  font-size: 0.75rem; color: var(--text-3);
+}
+
+.fc-actions {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; justify-content: center;
+}
+
+.fc-learned-count {
+  font-size: 0.8rem; color: var(--text-3);
+}
+
+/* ── Quiz Mini ── */
+.quiz-mini-wrap {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.qm-question {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.qm-char {
+  font-family: var(--font-cjk);
+  font-size: 5rem; line-height: 1;
+  color: var(--red);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.qm-prompt {
+  font-size: 0.9rem; color: var(--text-3);
+}
+
+.qm-choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.qm-choice {
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  font-size: 1.1rem; font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--dur);
+  font-family: var(--font-body);
+}
+
+.qm-choice:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: var(--gold-soft);
+}
+
+.qm-choice.correct {
+  border-color: #27AE60; background: #E8F5E9; color: #1B5E20;
+}
+
+.qm-choice.wrong {
+  border-color: var(--red); background: var(--red-soft); color: var(--red-dark);
+}
+
+.qm-feedback {
+  text-align: center; padding: 12px;
+  border-radius: var(--radius-lg);
+  font-weight: 600; font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.qm-feedback.correct { background: #E8F5E9; color: #1B5E20; }
+.qm-feedback.wrong   { background: var(--red-soft); color: var(--red-dark); }
+
+.qm-score {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem; color: var(--text-3);
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .tabs { width: 100%; }
+  .tab-btn { flex: 1; text-align: center; padding: 8px 10px; font-size: 0.8rem; }
+  .module-page-header h1 { font-size: 1.15rem; }
+  .module-header-pct { font-size: 1.4rem; }
+}
+
+/* ============================================================
+   NIHONHAN - Japanese Vocab & Grammar (Fase 8)
+   ============================================================ */
+
+/* ── JP Vocab ── */
+.jp-vocab-level-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) { .vocab-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .vocab-grid { grid-template-columns: 1fr; } }
+
+.vocab-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vocab-card:hover {
+  border-color: var(--red);
+  box-shadow: 0 4px 16px rgba(192,57,43,0.1);
+  transform: translateY(-2px);
+}
+
+.vocab-card.learned {
+  background: var(--gold-soft);
+  border-color: rgba(212,175,55,0.5);
+}
+
+.vocab-card-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  background: rgba(212,175,55,0.15);
+  padding: 2px 6px;
+  border-radius: 99px;
+}
+
+.vocab-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vocab-word {
+  font-family: var(--font-cjk);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--red);
+}
+
+.vocab-pinyin {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.vocab-meaning {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.vocab-example {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.vocab-example-jp {
+  font-family: var(--font-cjk);
+  font-size: 0.8rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.vocab-example-tr {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.vocab-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.vocab-search {
+  flex: 1;
+  min-width: 200px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.vocab-search:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+}
+
+.theme-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.theme-tab {
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+
+.theme-tab:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.theme-tab.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  font-weight: 600;
+}
+
+.zh-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-3);
+}
+
+.zh-empty-icon {
+  font-family: var(--font-cjk);
+  font-size: 3rem;
+  opacity: 0.2;
+  margin-bottom: 8px;
+}
+
+/* ── Grammar Cards ── */
+.grammar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.grammar-card.expanded {
+  border-color: var(--red);
+  box-shadow: 0 4px 20px rgba(192,57,43,0.08);
+}
+
+.grammar-card.learned {
+  border-left: 3px solid var(--gold);
+}
+
+.grammar-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  gap: 12px;
+}
+
+.grammar-card-header:hover {
+  background: var(--bg);
+}
+
+.grammar-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.grammar-pattern {
+  font-family: var(--font-cjk);
+  font-size: 1.1rem;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.grammar-meaning {
+  font-size: 0.82rem;
+  color: var(--text-2);
+}
+
+.grammar-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.grammar-learned-badge {
+  font-size: 0.85rem;
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.grammar-expand-icon {
+  color: var(--text-3);
+  font-size: 0.7rem;
+}
+
+.grammar-card-body {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.2s ease;
+}
+
+.grammar-explanation {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 14px 0 16px;
+}
+
+.grammar-examples-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.grammar-examples {
+  margin-bottom: 14px;
+}
+
+.grammar-example-item {
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+
+.grammar-ex-jp {
+  font-family: var(--font-cjk);
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.grammar-ex-romaji {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-style: italic;
+  margin-bottom: 2px;
+}
+
+.grammar-ex-id {
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.grammar-notes {
+  background: var(--gold-soft);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.grammar-notes-icon {
+  font-size: 0.9rem;
+}
+
+.grammar-actions {
+  display: flex;
+  justify-content: flex-end;
+}

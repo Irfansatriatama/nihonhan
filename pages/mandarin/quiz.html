@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <title>Quiz Mandarin - NihonHan</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/quiz.css">
+  <link rel="stylesheet" href="../../assets/css/transitions.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-main">NihonHan</div><div class="logo-sub">Jepang &amp; Mandarin</div></div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>中</div>
+      <div class="sidebar-user-info"><div class="user-name" data-user-name>Pengguna</div><div class="user-level" data-user-email>-</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="../dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="../stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="../settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="../report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="../japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="../japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="../japanese/kanji.html" data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="../japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="../japanese/grammar.html" data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="../japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="pinyin.html" data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="tones.html" data-page="tones"><span class="nav-icon">&#9835;</span>Nada</a>
+      <a class="nav-item" href="hanzi.html" data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="../japanese/quiz.html" data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="quiz.html" data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="../profile.html" data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="../change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <div class="main-content">
+    <header class="topbar"><span class="topbar-title">Quiz Mandarin</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button></header>
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <div style="width:40px"></div>
+    </header>
+
+    <div class="page-content">
+      <div class="quiz-wrapper">
+
+        <!-- SELECT SCREEN -->
+        <div class="quiz-select-screen" id="selectScreen">
+          <div class="quiz-hero">
+            <div class="quiz-hero-icon">中</div>
+            <h1>Quiz Bahasa Mandarin</h1>
+            <p>Uji pemahamanmu tentang hanzi, pinyin, dan kosakata Mandarin!</p>
+          </div>
+
+          <div style="margin-bottom:8px;">
+            <h3 style="font-size:0.9rem;color:var(--text-2);margin-bottom:12px;">Pilih Modul</h3>
+            <div class="quiz-modules-grid">
+              <div class="quiz-module-card" data-module="hanzi">
+                <div class="card-icon">汉</div>
+                <div class="card-title">Hanzi</div>
+                <div class="card-desc">HSK 1 · 2 · 3 karakter</div>
+              </div>
+              <div class="quiz-module-card" data-module="pinyin">
+                <div class="card-icon">拼</div>
+                <div class="card-title">Pinyin</div>
+                <div class="card-desc">Bacaan pinyin hanzi</div>
+              </div>
+              <div class="quiz-module-card" data-module="vocab">
+                <div class="card-icon">词</div>
+                <div class="card-title">Kosakata</div>
+                <div class="card-desc">120+ kata per tema</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-config-panel">
+            <h3>Pengaturan Quiz</h3>
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:8px;">Mode Jawaban</div>
+              <div class="quiz-mode-selector" id="modeOptions">
+                <button class="quiz-mode-btn active" data-mode="choice">🔘 Pilih Jawaban</button>
+                <button class="quiz-mode-btn" data-mode="input">⌨️ Ketik Jawaban</button>
+              </div>
+            </div>
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:8px;">Tipe Soal</div>
+              <div class="quiz-type-options" id="typeOptions">
+                <button class="quiz-type-btn active" data-type="char-to-meaning">Karakter → Arti</button>
+                <button class="quiz-type-btn" data-type="meaning-to-char">Arti → Karakter</button>
+                <button class="quiz-type-btn" data-type="char-to-pinyin">Karakter → Pinyin</button>
+              </div>
+            </div>
+            <div style="margin-bottom:14px;">
+              <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:8px;">Jumlah Soal</div>
+              <div class="quiz-type-options" id="countOptions">
+                <button class="quiz-type-btn" data-count="5">5 Soal</button>
+                <button class="quiz-type-btn active" data-count="10">10 Soal</button>
+                <button class="quiz-type-btn" data-count="20">20 Soal</button>
+              </div>
+            </div>
+            <div id="hskLevelPanel" style="margin-bottom:14px;display:none;">
+              <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:8px;">Level HSK</div>
+              <div class="quiz-type-options" id="hskLevelOptions">
+                <button class="quiz-type-btn active" data-hlevel="all">Semua</button>
+                <button class="quiz-type-btn" data-hlevel="1">HSK 1</button>
+                <button class="quiz-type-btn" data-hlevel="2">HSK 2</button>
+                <button class="quiz-type-btn" data-hlevel="3">HSK 3</button>
+              </div>
+            </div>
+            <div id="vocabThemePanel" style="margin-bottom:14px;display:none;">
+              <div style="font-size:0.82rem;color:var(--text-3);margin-bottom:8px;">Tema Kosakata</div>
+              <div class="quiz-type-options" id="vocabThemeOptions">
+                <button class="quiz-type-btn active" data-theme="all">Semua Tema</button>
+                <button class="quiz-type-btn" data-theme="greetings">Salam</button>
+                <button class="quiz-type-btn" data-theme="food">Makanan</button>
+                <button class="quiz-type-btn" data-theme="family">Keluarga</button>
+              </div>
+            </div>
+            <button class="btn btn-primary quiz-start-btn" id="startBtn" disabled>
+              Pilih modul terlebih dahulu
+            </button>
+          </div>
+
+          <div class="badges-panel">
+            <div class="badges-panel-header">🏅 Pencapaianmu</div>
+            <div class="badges-grid" id="badgesGrid"></div>
+          </div>
+        </div>
+
+        <!-- SESSION SCREEN -->
+        <div class="quiz-session-screen" id="sessionScreen">
+          <div class="quiz-topbar">
+            <div class="quiz-progress-wrap">
+              <div class="quiz-progress-label" id="progressLabel">Soal 1 dari 10</div>
+              <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill" style="width:0%"></div></div>
+            </div>
+            <div class="quiz-score-display">
+              <div class="score-num" id="scoreNum">0</div>
+              <div class="score-label">Benar</div>
+            </div>
+            <div class="quiz-timer" id="quizTimer">20</div>
+          </div>
+
+          <div class="quiz-card" id="quizCard">
+            <div class="quiz-q-label" id="qLabel"></div>
+            <div class="quiz-char" id="qChar"></div>
+            <div class="quiz-q-text" id="qText" style="display:none;"></div>
+            <div class="quiz-q-hint" id="qHint"></div>
+          </div>
+
+          <div class="quiz-choices" id="choicesGrid"></div>
+
+          <!-- Mode Ketik Jawaban -->
+          <div class="quiz-input-wrap" id="inputWrap" style="display:none;">
+            <input type="text" class="quiz-input-field" id="quizInputField"
+              placeholder="Ketik jawabanmu di sini…" autocomplete="off" autocorrect="off" spellcheck="false" />
+            <div class="quiz-input-hint" id="inputHint">Ketik dalam pinyin atau karakter Mandarin</div>
+            <button class="quiz-input-submit" id="inputSubmitBtn">Kirim Jawaban ✓</button>
+            <button class="quiz-input-skip" id="inputSkipBtn">Lewati soal ini</button>
+            <div class="quiz-correct-reveal" id="correctReveal" style="display:none;"></div>
+          </div>
+
+          <div class="quiz-feedback" id="feedback">
+            <div class="quiz-feedback-icon" id="feedbackIcon"></div>
+            <div class="quiz-feedback-text" id="feedbackText"></div>
+          </div>
+
+          <button class="btn btn-primary quiz-next-btn" id="nextBtn" style="display:none;">Soal Berikutnya →</button>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div class="quiz-result-screen" id="resultScreen">
+          <div class="result-card">
+            <div class="result-emoji" id="resultEmoji">🎉</div>
+            <h2 class="result-title" id="resultTitle">Quiz Selesai!</h2>
+            <p class="result-subtitle" id="resultSubtitle"></p>
+            <div class="result-score-ring">
+              <svg width="140" height="140" viewBox="0 0 140 140">
+                <circle class="result-score-ring-circle" cx="70" cy="70" r="60"/>
+                <circle class="result-score-ring-fill" id="ringFill" cx="70" cy="70" r="60" stroke-dasharray="0 377" stroke-dashoffset="0"/>
+              </svg>
+              <div class="result-score-ring-text">
+                <div class="score-big" id="resultScoreBig">0</div>
+                <div class="score-denom" id="resultDenom">/10</div>
+              </div>
+            </div>
+            <div class="result-stats">
+              <div class="result-stat"><div class="stat-val" id="statAccuracy">0%</div><div class="stat-lbl">Akurasi</div></div>
+              <div class="result-stat"><div class="stat-val" id="statCorrect">0</div><div class="stat-lbl">Benar</div></div>
+              <div class="result-stat"><div class="stat-val" id="statWrong">0</div><div class="stat-lbl">Salah</div></div>
+            </div>
+            <div class="result-actions">
+              <button class="btn btn-primary" id="retryBtn">Ulangi Quiz</button>
+              <button class="btn btn-outline" id="backToSelectBtn">Pilih Modul</button>
+            </div>
+          </div>
+          <div class="quiz-review">
+            <div class="quiz-review-header">📋 Tinjauan Jawaban</div>
+            <div class="quiz-review-list" id="reviewList"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="bottom-nav-item" href="../dashboard.html" data-page="dashboard"><span>&#9632;</span><span>Beranda</span></a>
+    <a class="bottom-nav-item" href="../japanese/quiz.html" data-page="quiz-jp"><span>&#9734;</span><span>Quiz JP</span></a>
+    <a class="bottom-nav-item active" href="quiz.html" data-page="quiz-zh"><span>&#9733;</span><span>Quiz ZH</span></a>
+    <a class="bottom-nav-item" href="../profile.html" data-page="profile"><span>&#128100;</span><span>Profil</span></a>
+  </nav>
+</div>
+<div id="toast-container"></div>
+
+<script src="../../assets/js/core/storage.js"></script>
+<script src="../../assets/js/core/auth.js"></script>
+<script src="../../assets/js/core/router.js"></script>
+<script src="../../assets/js/core/app.js"></script>
+<script src="../../assets/js/data/hanzi.js"></script>
+<script src="../../assets/js/data/zh-vocab.js"></script>
+<script src="../../assets/js/modules/progress.js"></script>
+<script src="../../assets/js/modules/xp.js"></script>
+<script src="../../assets/js/modules/challenge.js"></script>
+<script src="../../assets/js/modules/quiz.js"></script>
+<script src="../../assets/js/pages/quiz-zh.js"></script>
+<script src="../../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

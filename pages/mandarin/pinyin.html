@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <title>Pinyin - NihonHan</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/japanese.css">
+  <link rel="stylesheet" href="../../assets/css/mandarin.css">
+  <link rel="stylesheet" href="../../assets/css/transitions.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-main">NihonHan</div><div class="logo-sub">Jepang &amp; Mandarin</div></div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info"><div class="user-name" data-user-name>Pengguna</div><div class="user-level" data-user-email>-</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="../dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="../stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="../settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="../report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="../japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="../japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="../japanese/kanji.html" data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="../japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="../japanese/grammar.html" data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="../japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="pinyin.html" data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="tones.html" data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="hanzi.html" data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="../japanese/quiz.html" data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="quiz.html" data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="../profile.html" data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="../change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <div class="main-content">
+    <header class="topbar"><span class="topbar-title">Pinyin</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button></header>
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <main class="page-body fade-in">
+      <div class="module-page-header zh" data-cjk="拼">
+        <div>
+          <h1>Pinyin 拼音</h1>
+          <p>Sistem romanisasi Bahasa Mandarin &mdash; 21 inisial + 38 final</p>
+        </div>
+        <div class="module-header-progress">
+          <div style="font-size:0.85rem;opacity:0.8;">Panduan Pengucapan</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="initials">Inisial (21)</button>
+        <button class="tab-btn" data-tab="finals">Final (38)</button>
+        <button class="tab-btn" data-tab="combinations">Kombinasi</button>
+      </div>
+
+      <!-- Inisials Tab -->
+      <div class="tab-panel active" id="tab-initials">
+        <div class="pinyin-section">
+          <div class="pinyin-section-title">🔤 21 Konsonan Awal (声母 Shēngmǔ)</div>
+          <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:16px;">Klik pada setiap konsonan untuk melihat cara pengucapannya.</p>
+          <div class="pinyin-grid" id="initials-grid"></div>
+        </div>
+      </div>
+
+      <!-- Finals Tab -->
+      <div class="tab-panel" id="tab-finals">
+        <div class="pinyin-section">
+          <div class="pinyin-section-title">🔊 38 Vokal Akhir (韵母 Yùnmǔ)</div>
+          <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:16px;">Final adalah vokal atau vokal+konsonan yang mengikuti inisial.</p>
+          <div class="pinyin-grid" id="finals-grid"></div>
+        </div>
+      </div>
+
+      <!-- Combinations Tab -->
+      <div class="tab-panel" id="tab-combinations">
+        <div class="pinyin-section">
+          <div class="pinyin-section-title">🔗 Kombinasi Umum</div>
+          <p style="font-size:0.85rem;color:var(--text-3);margin-bottom:16px;">Klik kombinasi untuk melihat contoh kata.</p>
+          <div class="pinyin-grid" id="comb-grid"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="../dashboard.html"><span class="bnav-icon">&#9632;</span><span>Dashboard</span></a>
+      <a class="bottom-nav-item active" href="pinyin.html"><span class="bnav-icon cjk">拼</span><span>Pinyin</span></a>
+      <a class="bottom-nav-item" href="hanzi.html"><span class="bnav-icon cjk">汉</span><span>Hanzi</span></a>
+      <a class="bottom-nav-item" href="../profile.html"><span class="bnav-icon">&#128100;</span><span>Profil</span></a>
+    </div>
+  </nav>
+</div>
+
+<!-- Detail Modal -->
+<div class="pinyin-modal-backdrop" id="pinyin-modal">
+  <div class="modal pinyin-modal">
+    <div class="modal-header">
+      <div class="modal-title" id="pm-title">Detail</div>
+      <div class="modal-close" id="pm-close">&#10005;</div>
+    </div>
+    <div class="modal-body" style="text-align:center;">
+      <div class="pinyin-modal-char" id="pm-char"></div>
+      <div class="pinyin-modal-ipa" id="pm-ipa"></div>
+      <div class="pinyin-modal-desc" id="pm-desc"></div>
+      <div class="kanji-example-box" style="text-align:left;">
+        <div class="kanji-example-label">Contoh</div>
+        <div class="pinyin-modal-ex-word" id="pm-ex-word"></div>
+        <div class="pinyin-modal-ex-pinyin" id="pm-ex-pinyin"></div>
+        <div class="pinyin-modal-ex-meaning" id="pm-ex-meaning"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" id="pm-close-btn">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../../assets/js/core/storage.js"></script>
+<script src="../../assets/js/core/auth.js"></script>
+<script src="../../assets/js/core/router.js"></script>
+<script src="../../assets/js/core/app.js"></script>
+<script src="../../assets/js/modules/audio.js"></script>
+<script src="../../assets/js/data/pinyin.js"></script>
+<script src="../../assets/js/pages/pinyin.js"></script>
+<script src="../../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

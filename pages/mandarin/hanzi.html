@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <title>Hanzi - NihonHan</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/japanese.css">
+  <link rel="stylesheet" href="../../assets/css/mandarin.css">
+  <link rel="stylesheet" href="../../assets/css/transitions.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-main">NihonHan</div><div class="logo-sub">Jepang &amp; Mandarin</div></div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info"><div class="user-name" data-user-name>Pengguna</div><div class="user-level" data-user-email>-</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="../dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="../stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="../settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="../report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="../japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="../japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="../japanese/kanji.html" data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="../japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="../japanese/grammar.html" data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="../japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="pinyin.html" data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="tones.html" data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="hanzi.html" data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="../japanese/quiz.html" data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="quiz.html" data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="../profile.html" data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="../change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <div class="main-content">
+    <header class="topbar"><span class="topbar-title">Hanzi</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button></header>
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <main class="page-body fade-in">
+      <div class="module-page-header zh" data-cjk="字">
+        <div>
+          <h1>Hanzi 汉字</h1>
+          <p>Karakter Mandarin &mdash; HSK 1, HSK 2, HSK 3</p>
+        </div>
+        <div class="module-header-progress">
+          <div class="module-header-pct" id="hdr-pct">0%</div>
+          <div class="module-header-sub" id="hdr-sub">0 / 0 hafal</div>
+        </div>
+      </div>
+
+      <!-- HSK Level Progress -->
+      <div class="hsk-level-progress">
+        <div class="hlp-item">
+          <div class="hlp-header">
+            <span class="hsk-badge hsk-1">HSK 1</span>
+            <span class="hlp-count" id="lvl-lbl-1">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="lvl-bar-1" style="width:0%;background:#2E86C1;"></div></div>
+        </div>
+        <div class="hlp-item">
+          <div class="hlp-header">
+            <span class="hsk-badge hsk-2">HSK 2</span>
+            <span class="hlp-count" id="lvl-lbl-2">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="lvl-bar-2" style="width:0%;background:#229954;"></div></div>
+        </div>
+        <div class="hlp-item">
+          <div class="hlp-header">
+            <span class="hsk-badge hsk-3">HSK 3</span>
+            <span class="hlp-count" id="lvl-lbl-3">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="lvl-bar-3" style="width:0%;background:#D4A017;"></div></div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" style="margin-bottom:16px;">
+        <button class="tab-btn active" data-tab="browse">Jelajah</button>
+        <button class="tab-btn" data-tab="srs">🔁 SRS</button>
+      </div>
+
+      <!-- Browse Panel -->
+      <div class="tab-panel active" id="tab-browse">
+
+      <!-- Toolbar -->
+      <div class="hanzi-toolbar">
+        <div class="kanji-level-tabs">
+          <button class="filter-btn active" data-hsk="1">HSK 1 <span class="filter-count" id="cnt-1"></span></button>
+          <button class="filter-btn" data-hsk="2">HSK 2 <span class="filter-count" id="cnt-2"></span></button>
+          <button class="filter-btn" data-hsk="3">HSK 3 <span class="filter-count" id="cnt-3"></span></button>
+          <button class="filter-btn fav-filter" id="fav-filter-btn">&#9733; Favorit</button>
+        </div>
+        <div class="kanji-search-wrap">
+          <input type="text" id="hanzi-search" class="kanji-search" placeholder="Cari karakter atau arti…" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="kanji-toolbar-right">
+          <span class="grid-count" id="grid-count"></span>
+          <button class="btn btn-ghost btn-sm" id="reset-btn">↺ Reset</button>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="hanzi-grid" id="hanzi-grid"></div>
+
+      </div><!-- end tab-browse -->
+
+      <!-- SRS Panel -->
+      <div class="tab-panel" id="tab-srs">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="../dashboard.html"><span class="bnav-icon">&#9632;</span><span>Dashboard</span></a>
+      <a class="bottom-nav-item" href="pinyin.html"><span class="bnav-icon cjk">拼</span><span>Pinyin</span></a>
+      <a class="bottom-nav-item active" href="hanzi.html"><span class="bnav-icon cjk">汉</span><span>Hanzi</span></a>
+      <a class="bottom-nav-item" href="../profile.html"><span class="bnav-icon">&#128100;</span><span>Profil</span></a>
+    </div>
+  </nav>
+</div>
+
+<!-- Hanzi Modal -->
+<div class="hanzi-modal-backdrop" id="hanzi-modal">
+  <div class="modal modal-hanzi">
+    <div class="modal-header" style="position:relative">
+      <div class="modal-title">Detail Hanzi</div>
+      <div class="modal-close" id="hm-close">&#10005;</div>
+    </div>
+    <div class="modal-body">
+      <div class="hanzi-modal-body">
+        <div class="hanzi-modal-left">
+          <div id="hm-char" class="modal-hanzi-char cjk"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <span class="hsk-badge" id="hm-hsk"></span>
+            <span class="hanzi-modal-strokes" id="hm-strokes"></span>
+          </div>
+        </div>
+        <div class="hanzi-modal-right">
+          <div class="hanzi-modal-pinyin" id="hm-pinyin"></div>
+          <div class="hanzi-modal-meaning" id="hm-meaning"></div>
+          <div class="hanzi-example-box">
+            <div class="hanzi-example-label">Contoh Kalimat</div>
+            <div class="hanzi-ex-sentence cjk" id="hm-ex-sentence"></div>
+            <div class="hanzi-ex-pinyin" id="hm-ex-pinyin"></div>
+            <div class="hanzi-ex-meaning" id="hm-ex-meaning"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="hm-close-btn">Tutup</button>
+      <button class="btn btn-primary btn-sm" id="hm-mark-btn">Tandai Hafal</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../../assets/js/core/storage.js"></script>
+<script src="../../assets/js/core/auth.js"></script>
+<script src="../../assets/js/core/router.js"></script>
+<script src="../../assets/js/core/app.js"></script>
+<script src="../../assets/js/modules/audio.js"></script>
+<script src="../../assets/js/data/hanzi.js"></script>
+<script src="../../assets/js/modules/progress.js"></script>
+<script src="../../assets/js/modules/xp.js"></script>
+<script src="../../assets/js/modules/challenge.js"></script>
+<script src="../../assets/js/modules/srs.js"></script>
+<script src="../../assets/js/modules/srs-ui.js"></script>
+<script src="../../assets/js/pages/hanzi.js"></script>
+<script src="../../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+/**
+ * NihonHan — Dialog & Percakapan Stylesheet
+ * Fase 17
+ */
+
+/* ── Filter Bar ─────────────────────────────────────── */
+.dialog-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.dialog-filter-bar .filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 4px;
+}
+
+.dialog-filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.dialog-filter-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.dialog-filter-btn.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── Dialog Grid ─────────────────────────────────────── */
+.dialog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* ── Dialog Card (list view) ─────────────────────────── */
+.dialog-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dialog-card:hover {
+  border-color: var(--red);
+  box-shadow: 0 4px 16px var(--shadow);
+  transform: translateY(-2px);
+}
+
+.dialog-card-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red-soft);
+  border-radius: 12px;
+}
+
+.dialog-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.dialog-card-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.dialog-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dialog-card-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.dialog-level-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: var(--gold-soft);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.dialog-lines-count {
+  font-size: 0.73rem;
+  color: var(--text-3);
+}
+
+.dialog-card-arrow {
+  color: var(--text-3);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: transform 0.18s;
+}
+
+.dialog-card:hover .dialog-card-arrow {
+  transform: translateX(4px);
+  color: var(--red);
+}
+
+/* ── Dialog Viewer ────────────────────────────────────── */
+.dialog-viewer {
+  display: none;
+}
+
+.dialog-viewer.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+.dialog-viewer-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.dialog-back-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--text-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dialog-back-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.dialog-viewer-title-wrap {
+  flex: 1;
+}
+
+.dialog-viewer-icon {
+  font-size: 1.6rem;
+}
+
+.dialog-viewer-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dialog-viewer-desc {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* Controls */
+.dialog-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.dialog-toggle-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.dialog-toggle-btn.on {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* Playthrough Mode */
+.dialog-play-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.dialog-play-btn {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: none;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dialog-play-btn:hover {
+  opacity: 0.88;
+}
+
+.dialog-play-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Conversation Lines ───────────────────────────────── */
+.dialog-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.dialog-line {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  transition: all 0.2s;
+  opacity: 1;
+}
+
+.dialog-line.speaker-a {
+  border-left: 3px solid var(--red);
+}
+
+.dialog-line.speaker-b {
+  border-left: 3px solid var(--gold);
+}
+
+.dialog-line.highlighted {
+  background: var(--red-soft);
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(192,57,43,0.1);
+}
+
+.dialog-line.dimmed {
+  opacity: 0.4;
+}
+
+.dialog-speaker-badge {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.dialog-line.speaker-a .dialog-speaker-badge {
+  background: var(--red);
+}
+
+.dialog-line.speaker-b .dialog-speaker-badge {
+  background: var(--gold);
+}
+
+.dialog-line-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dialog-line-main {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.dialog-line-sub {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  margin-bottom: 2px;
+  font-style: italic;
+}
+
+.dialog-line-trans {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.dialog-line-audio {
+  flex-shrink: 0;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  color: var(--text-3);
+  font-size: 0.85rem;
+  transition: all 0.18s;
+  align-self: center;
+}
+
+.dialog-line-audio:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* Hide/show toggle sections */
+.hide-romaji .dialog-line-sub,
+.hide-romaji .dialog-line-pinyin { display: none; }
+
+.hide-translation .dialog-line-trans { display: none; }
+
+/* ── Vocab Section ────────────────────────────────────── */
+.dialog-vocab-section {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.dialog-vocab-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.dialog-vocab-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dialog-vocab-item:hover {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+
+.dialog-vocab-jp, .dialog-vocab-zh {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.dialog-vocab-reading {
+  font-size: 0.72rem;
+  color: var(--text-2);
+  margin-bottom: 2px;
+}
+
+.dialog-vocab-meaning {
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+/* ── Progress line indicator ─────────────────────────── */
+.dialog-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.dialog-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+
+/* ── Dark mode ───────────────────────────────────────── */
+[data-theme="dark"] .dialog-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .dialog-line {
+  background: var(--surface);
+}
+
+[data-theme="dark"] .dialog-line.highlighted {
+  background: rgba(192,57,43,0.12);
+}
+
+[data-theme="dark"] .dialog-vocab-item {
+  background: var(--bg);
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 600px) {
+  .dialog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-line-main {
+    font-size: 0.95rem;
+  }
+
+  .dialog-viewer-header {
+    flex-wrap: wrap;
+  }
+
+  .dialog-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dialog-play-controls {
+    margin-left: 0;
+  }
+
+  .dialog-vocab-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

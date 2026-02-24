@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  <title>Profil - NihonHan</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    /* ── Profile Hero ── */
+    .profile-hero {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 28px;
+      background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 55%, #E05A3A 100%);
+      padding: 40px 36px 36px;
+      color: #fff;
+    }
+    .profile-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 90% 10%, rgba(212,175,55,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 90%, rgba(0,0,0,0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .profile-hero-deco {
+      position: absolute;
+      right: -20px; top: -20px;
+      font-family: var(--font-cjk);
+      font-size: 160px;
+      opacity: 0.07;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .profile-hero-body {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .profile-avatar-wrap { position: relative; flex-shrink: 0; }
+    .profile-avatar-ring {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(var(--gold), var(--gold-light), rgba(255,255,255,0.4), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .profile-avatar-ring:hover { transform: scale(1.06); }
+    .profile-avatar-inner {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-cjk);
+      font-size: 2.4rem;
+      border: 2px solid rgba(255,255,255,0.25);
+      transition: background 0.2s;
+    }
+    .profile-avatar-ring:hover .profile-avatar-inner { background: rgba(255,255,255,0.25); }
+    .avatar-edit-badge {
+      position: absolute; bottom: 2px; right: 2px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--red-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700;
+      border: 2px solid var(--red-dark);
+      cursor: pointer;
+    }
+    .profile-meta { flex: 1; min-width: 0; }
+    .profile-meta h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem; line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .profile-meta .email { font-size: 0.875rem; opacity: 0.8; margin-top: 4px; }
+    .profile-meta .joined {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; opacity: 0.65; margin-top: 10px;
+      background: rgba(255,255,255,0.12);
+      padding: 4px 12px; border-radius: 99px;
+    }
+    .profile-badges {
+      position: relative; z-index: 1;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .badge-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.75rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 99px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .stats-strip-item {
+      padding: 20px 16px; text-align: center;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .stats-strip-item:last-child { border-right: none; }
+    .stats-strip-item:hover { background: var(--surface-2); }
+    .stats-strip-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+    .stats-strip-value {
+      font-family: var(--font-display); font-size: 1.6rem;
+      font-weight: 700; color: var(--red); line-height: 1;
+    }
+    .stats-strip-label {
+      font-size: 0.71rem; color: var(--text-3); margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+
+    /* ── Two column grid ── */
+    .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+    /* ── Avatar grid ── */
+    .avatar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0 0; }
+    .avatar-option {
+      aspect-ratio: 1; border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-cjk); font-size: 1.4rem;
+      cursor: pointer; border: 2px solid var(--border);
+      background: var(--surface-2); transition: all 0.2s;
+    }
+    .avatar-option:hover {
+      border-color: var(--gold); background: var(--gold-soft);
+      transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.25);
+    }
+    .avatar-option.selected {
+      border-color: var(--red); background: var(--red-soft);
+      transform: scale(1.08); box-shadow: 0 4px 12px rgba(192,57,43,0.2);
+    }
+
+    /* ── Section eyebrow ── */
+    .section-eyebrow {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Quick links ── */
+    .quick-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 14px; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--surface);
+      transition: all 0.2s; text-decoration: none; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .quick-link:last-child { margin-bottom: 0; }
+    .quick-link:hover { border-color: var(--red); background: var(--red-soft); transform: translateX(4px); }
+    .quick-link-icon {
+      width: 36px; height: 36px; border-radius: var(--radius);
+      background: var(--surface-2); display: flex; align-items: center;
+      justify-content: center; font-size: 1rem; flex-shrink: 0;
+    }
+    .quick-link:hover .quick-link-icon { background: rgba(192,57,43,0.12); }
+    .quick-link-text { font-size: 0.9rem; font-weight: 500; }
+    .quick-link-sub  { font-size: 0.78rem; color: var(--text-3); }
+    .quick-link-arrow { margin-left: auto; color: var(--text-3); }
+
+    @media (max-width: 760px) { .profile-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .profile-hero-body { flex-direction: column; align-items: flex-start; }
+      .profile-hero { padding: 28px 20px 24px; }
+      .profile-meta h2 { font-size: 1.5rem; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stats-strip-item:nth-child(2) { border-right: none; }
+      .stats-strip-item:nth-child(1),
+      .stats-strip-item:nth-child(2) { border-bottom: 1px solid var(--border); }
+    }
+  </style>
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="app-shell">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-main">NihonHan</div>
+      <div class="logo-sub">Jepang &amp; Mandarin</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info">
+        <div class="user-name" data-user-name>Pengguna</div>
+        <div class="user-level" data-user-email>-</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="japanese/hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="japanese/katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="japanese/kanji.html"    data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="japanese/vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="japanese/grammar.html"  data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="japanese/dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="mandarin/pinyin.html"     data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="mandarin/tones.html"      data-page="tones"><span class="nav-icon">&#9835;</span>Nada (Tones)</a>
+      <a class="nav-item" href="mandarin/hanzi.html"      data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="mandarin/vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="mandarin/dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="japanese/quiz.html"  data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="mandarin/quiz.html"  data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item active" href="profile.html" data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <div class="main-content">
+    <header class="topbar">
+      <span class="topbar-title">Profil</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button>
+    </header>
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <main class="page-body fade-in">
+
+      <!-- Hero -->
+      <div class="profile-hero">
+        <div class="profile-hero-deco" id="hero-deco">日</div>
+        <div class="profile-hero-body">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar-ring" id="avatar-display" title="Klik untuk ganti avatar">
+              <div class="profile-avatar-inner" id="avatar-char">日</div>
+            </div>
+            <div class="avatar-edit-badge" id="avatar-edit-btn">✎</div>
+          </div>
+          <div class="profile-meta">
+            <h2 id="display-name">Pengguna</h2>
+            <p class="email" id="display-email">-</p>
+            <p class="joined" id="display-joined">📅 -</p>
+          </div>
+        </div>
+        <div class="profile-badges" id="badge-container"></div>
+      </div>
+
+      <!-- Stats strip -->
+      <div class="stats-strip" id="stats-strip"></div>
+
+      <!-- Two-column content -->
+      <div class="profile-grid">
+
+        <!-- Edit form -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">✏️ Edit Profil</div>
+          </div>
+          <form id="profile-form">
+            <div class="form-group">
+              <label class="form-label" for="edit-name">Nama Tampilan</label>
+              <input type="text" id="edit-name" class="form-control" placeholder="Nama kamu">
+              <span class="form-error" id="name-error"></span>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Avatar — pilih karakter</label>
+              <div class="avatar-grid" id="avatar-grid"></div>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="submit" class="btn btn-primary" style="width:100%;">Simpan Perubahan</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right side -->
+        <div>
+          <div class="card" style="margin-bottom:20px;">
+            <div class="section-eyebrow">Akun</div>
+            <a href="change-password.html" class="quick-link">
+              <div class="quick-link-icon">🔒</div>
+              <div><div class="quick-link-text">Ganti Password</div><div class="quick-link-sub">Ubah keamanan akun</div></div>
+              <span class="quick-link-arrow">›</span>
+            </a>
+            <a href="settings.html" class="quick-link">
+              <div class="quick-link-icon">⚙️</div>
+              <div><div class="quick-link-text">Pengaturan</div><div class="quick-link-sub">Preferensi aplikasi</div></div>
+              <span class="quick-link-arrow">›</span>
+            </a>
+            <a href="stats.html" class="quick-link">
+              <div class="quick-link-icon">📊</div>
+              <div><div class="quick-link-text">Statistik Lengkap</div><div class="quick-link-sub">Riwayat belajarmu</div></div>
+              <span class="quick-link-arrow">›</span>
+            </a>
+          </div>
+
+          <div class="card" style="background:linear-gradient(135deg,var(--gold-soft),#fff8e1);border-color:rgba(212,175,55,0.35);">
+            <div class="section-eyebrow" style="color:var(--gold-dark);">Tips Belajar</div>
+            <p style="font-size:0.85rem;color:var(--gold-dark);line-height:1.7;">
+              Konsistensi adalah kunci! Belajar minimal <strong>10 menit sehari</strong> lebih efektif
+              daripada belajar berjam-jam sekali seminggu. Jaga streak-mu! 🔥
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="dashboard.html" data-page="dashboard"><span class="bnav-icon">&#9632;</span><span>Dashboard</span></a>
+      <a class="bottom-nav-item" href="japanese/hiragana.html"><span class="bnav-icon cjk">あ</span><span>Jepang</span></a>
+      <a class="bottom-nav-item" href="mandarin/pinyin.html"><span class="bnav-icon cjk">拼</span><span>Mandarin</span></a>
+      <a class="bottom-nav-item active" href="profile.html" data-page="profile"><span class="bnav-icon">&#128100;</span><span>Profil</span></a>
+    </div>
+  </nav>
+</div>
+<div id="toast-container"></div>
+
+<script src="../assets/js/core/storage.js"></script>
+<script src="../assets/js/core/auth.js"></script>
+<script src="../assets/js/core/router.js"></script>
+<script src="../assets/js/core/app.js"></script>
+<script>
+  if (!Router.guard()) throw '';
+  App.init('profile');
+
+  const user    = Auth.getActiveUser();
+  const avatars = ['日','語','学','漢','字','書','読','聞','話','思','心','愛','力','勉','強','智','文','詩','歌','声','月','山','水','火','木'];
+
+  const av = user.avatar || '日';
+  document.getElementById('display-name').textContent  = user.name;
+  document.getElementById('display-email').textContent = user.email;
+  document.getElementById('avatar-char').textContent   = av;
+  document.getElementById('hero-deco').textContent     = av;
+  document.getElementById('edit-name').value           = user.name;
+
+  const joined = new Date(user.createdAt);
+  document.getElementById('display-joined').textContent =
+    '📅 Bergabung ' + joined.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+
+  const stats  = Storage.getUser(user.id, 'stats',  { totalLearned:0, quizCompleted:0, totalCorrect:0, totalQuestions:0 });
+  const streak = Storage.getUser(user.id, 'streak', { count: 0 });
+
+  // Badges
+  const badges = [];
+  if (streak.count >= 7)         badges.push({ icon:'🔥', label: streak.count + ' hari streak' });
+  if (stats.totalLearned >= 50)  badges.push({ icon:'📚', label: '50+ dipelajari' });
+  if (stats.quizCompleted >= 10) badges.push({ icon:'⭐', label: '10+ quiz' });
+  if (stats.totalCorrect >= 100) badges.push({ icon:'🎯', label: '100+ benar' });
+  if (badges.length === 0)       badges.push({ icon:'🌱', label: 'Pemula Semangat' });
+  document.getElementById('badge-container').innerHTML =
+    badges.map(b => `<span class="badge-chip">${b.icon} ${b.label}</span>`).join('');
+
+  // Stats strip
+  const accuracy = stats.totalQuestions > 0
+    ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100) + '%' : '-';
+  document.getElementById('stats-strip').innerHTML = [
+    { icon:'📖', value: stats.totalLearned,    label: 'Dipelajari' },
+    { icon:'🔥', value: streak.count,           label: 'Hari Streak' },
+    { icon:'✅', value: stats.quizCompleted,    label: 'Quiz Selesai' },
+    { icon:'🎯', value: accuracy,               label: 'Akurasi' },
+  ].map(s => `
+    <div class="stats-strip-item">
+      <span class="stats-strip-icon">${s.icon}</span>
+      <div class="stats-strip-value">${s.value}</div>
+      <div class="stats-strip-label">${s.label}</div>
+    </div>
+  `).join('');
+
+  // Avatar grid
+  let selectedAvatar = av;
+  const grid = document.getElementById('avatar-grid');
+  grid.innerHTML = avatars.map(a =>
+    `<div class="avatar-option${a === selectedAvatar ? ' selected' : ''}" data-avatar="${a}">${a}</div>`
+  ).join('');
+
+  function updateAvatar(a) {
+    selectedAvatar = a;
+    grid.querySelectorAll('.avatar-option').forEach(el =>
+      el.classList.toggle('selected', el.dataset.avatar === selectedAvatar));
+    document.getElementById('avatar-char').textContent = a;
+    document.getElementById('hero-deco').textContent   = a;
+  }
+
+  grid.addEventListener('click', e => {
+    const opt = e.target.closest('.avatar-option');
+    if (opt) updateAvatar(opt.dataset.avatar);
+  });
+  document.getElementById('avatar-display').addEventListener('click', () =>
+    grid.scrollIntoView({ behavior:'smooth', block:'center' }));
+  document.getElementById('avatar-edit-btn').addEventListener('click', () =>
+    grid.scrollIntoView({ behavior:'smooth', block:'center' }));
+
+  // Save
+  const form    = document.getElementById('profile-form');
+  const nameEl  = document.getElementById('edit-name');
+  const nameErr = document.getElementById('name-error');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    App.clearError(nameEl, nameErr);
+    const name = nameEl.value.trim();
+    if (name.length < 2) { App.showError(nameEl, nameErr, 'Nama minimal 2 karakter.'); return; }
+    const result = Auth.updateProfile(user.id, { name, avatar: selectedAvatar });
+    if (result.ok) {
+      document.getElementById('display-name').textContent = name;
+      App.renderUserInfo();
+      App.toast('Profil berhasil disimpan! ✨', 'success');
+    } else {
+      App.toast(result.error, 'error');
+    }
+  });
+</script>
+<script src="../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>

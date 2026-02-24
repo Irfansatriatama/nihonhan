@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#C0392B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NihonHan">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <title>Kanji - NihonHan</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/japanese.css">
+  <link rel="stylesheet" href="../../assets/css/kanji.css">
+  <link rel="stylesheet" href="../../assets/css/transitions.css">
+  <script>
+    // Fase 10: Apply theme sebelum render untuk mencegah FOUC
+    (function() {
+      try {
+        var theme = localStorage.getItem('nh_last_theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<div class="app-shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-main">NihonHan</div><div class="logo-sub">Jepang &amp; Mandarin</div></div>
+    <div class="sidebar-user">
+      <div class="avatar-circle" data-user-avatar>日</div>
+      <div class="sidebar-user-info"><div class="user-name" data-user-name>Pengguna</div><div class="user-level" data-user-email>-</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Umum</div>
+      <a class="nav-item" href="../dashboard.html" data-page="dashboard"><span class="nav-icon">&#9632;</span>Dashboard</a>
+      <a class="nav-item" href="../stats.html" data-page="stats"><span class="nav-icon">&#128202;</span>Statistik</a>
+      <a class="nav-item" href="../settings.html" data-page="settings"><span class="nav-icon">&#9881;</span>Pengaturan</a>
+      <a class="nav-item" href="../report.html" target="_blank" data-page="report"><span class="nav-icon">&#128438;</span>Ekspor PDF</a>
+      <div class="nav-section-label">Bahasa Jepang</div>
+      <a class="nav-item" href="hiragana.html" data-page="hiragana"><span class="nav-icon cjk">あ</span>Hiragana</a>
+      <a class="nav-item" href="katakana.html" data-page="katakana"><span class="nav-icon cjk">ア</span>Katakana</a>
+      <a class="nav-item" href="kanji.html" data-page="kanji"><span class="nav-icon cjk">漢</span>Kanji</a>
+      <a class="nav-item" href="vocabulary.html" data-page="jp-vocab"><span class="nav-icon">&#128218;</span>Kosakata JP</a>
+      <a class="nav-item" href="grammar.html" data-page="jp-grammar"><span class="nav-icon">&#128221;</span>Grammar JP</a>
+      <a class="nav-item" href="dialog.html" data-page="jp-dialog"><span class="nav-icon">&#128172;</span>Dialog JP</a>
+      <div class="nav-section-label">Bahasa Mandarin</div>
+      <a class="nav-item" href="../mandarin/pinyin.html" data-page="pinyin"><span class="nav-icon cjk">拼</span>Pinyin</a>
+      <a class="nav-item" href="../mandarin/tones.html" data-page="tones"><span class="nav-icon">&#9835;</span>Nada</a>
+      <a class="nav-item" href="../mandarin/hanzi.html" data-page="hanzi"><span class="nav-icon cjk">汉</span>Hanzi</a>
+      <a class="nav-item" href="../mandarin/vocabulary.html" data-page="zh-vocab"><span class="nav-icon">&#128218;</span>Kosakata ZH</a>
+      <a class="nav-item" href="../mandarin/dialog.html" data-page="zh-dialog"><span class="nav-icon">&#128172;</span>Dialog ZH</a>
+      <div class="nav-section-label">Latihan</div>
+      <a class="nav-item" href="quiz.html" data-page="quiz-jp"><span class="nav-icon">&#9733;</span>Quiz Jepang</a>
+      <a class="nav-item" href="../mandarin/quiz.html" data-page="quiz-zh"><span class="nav-icon">&#9733;</span>Quiz Mandarin</a>
+      <div class="nav-section-label">Akun</div>
+      <a class="nav-item" href="../profile.html" data-page="profile"><span class="nav-icon">&#128100;</span>Profil</a>
+      <a class="nav-item" href="../change-password.html" data-page="change-password"><span class="nav-icon">&#128274;</span>Ganti Password</a>
+      <a class="nav-item" href="#" data-action="logout"><span class="nav-icon">&#128682;</span>Keluar</a>
+    </nav>
+  </nav>
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <div class="main-content">
+    <header class="topbar"><span class="topbar-title">Kanji</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Beralih ke Mode Gelap">🌙</button></header>
+    <header class="mobile-topbar">
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <span class="logo-main">NihonHan</span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn-mobile" title="Mode Gelap">🌙</button>
+    </header>
+
+    <main class="page-body fade-in">
+
+      <div class="module-page-header" data-cjk="漢">
+        <div>
+          <h1>Kanji 漢字</h1>
+          <p>Karakter Tiongkok dalam Bahasa Jepang &mdash; N5 hingga N1</p>
+        </div>
+        <div class="module-header-progress">
+          <div class="module-header-pct" id="hdr-pct">0%</div>
+          <div class="module-header-sub" id="hdr-sub">0 / 0 hafal</div>
+        </div>
+      </div>
+
+      <!-- Level Progress Bars -->
+      <div class="kanji-level-progress">
+        <div class="klp-item">
+          <div class="klp-header">
+            <span class="klp-badge klp-n5">N5</span>
+            <span class="klp-count" id="lvl-lbl-N5">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill klp-fill-n5" id="lvl-bar-N5" style="width:0%"></div></div>
+        </div>
+        <div class="klp-item">
+          <div class="klp-header">
+            <span class="klp-badge klp-n4">N4</span>
+            <span class="klp-count" id="lvl-lbl-N4">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill klp-fill-n4" id="lvl-bar-N4" style="width:0%"></div></div>
+        </div>
+        <div class="klp-item">
+          <div class="klp-header">
+            <span class="klp-badge klp-n3">N3</span>
+            <span class="klp-count" id="lvl-lbl-N3">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill klp-fill-n3" id="lvl-bar-N3" style="width:0%"></div></div>
+        </div>
+        <div class="klp-item">
+          <div class="klp-header">
+            <span class="klp-badge klp-n2">N2</span>
+            <span class="klp-count" id="lvl-lbl-N2">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill klp-fill-n2" id="lvl-bar-N2" style="width:0%"></div></div>
+        </div>
+        <div class="klp-item">
+          <div class="klp-header">
+            <span class="klp-badge klp-n1">N1</span>
+            <span class="klp-count" id="lvl-lbl-N1">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill klp-fill-n1" id="lvl-bar-N1" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" style="margin-bottom:16px;">
+        <button class="tab-btn active" data-tab="browse">Jelajah</button>
+        <button class="tab-btn" data-tab="srs">🔁 SRS</button>
+      </div>
+
+      <!-- Browse Panel -->
+      <div class="tab-panel active" id="tab-browse">
+
+      <!-- Toolbar -->
+      <div class="kanji-toolbar">
+        <div class="kanji-level-tabs">
+          <button class="filter-btn active" data-level="N5">N5 <span class="filter-count">103</span></button>
+          <button class="filter-btn" data-level="N4">N4 <span class="filter-count">30</span></button>
+          <button class="filter-btn" data-level="N3">N3 <span class="filter-count">20</span></button>
+          <button class="filter-btn" data-level="N2">N2 <span class="filter-count">100</span></button>
+          <button class="filter-btn" data-level="N1">N1 <span class="filter-count">30</span></button>
+          <button class="filter-btn fav-filter" id="fav-filter-btn">&#9733; Favorit</button>
+        </div>
+        <div class="kanji-search-wrap">
+          <input type="text" id="kanji-search" class="kanji-search" placeholder="Cari kanji atau arti…" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="kanji-toolbar-right">
+          <span class="grid-count" id="grid-count"></span>
+          <button class="btn btn-ghost btn-sm" id="reset-progress-btn" title="Reset progress kanji">↺ Reset</button>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="kanji-grid" id="kanji-grid"></div>
+
+      </div><!-- end tab-browse -->
+
+      <!-- SRS Panel -->
+      <div class="tab-panel" id="tab-srs">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="../dashboard.html"><span class="bnav-icon">&#9632;</span><span>Dashboard</span></a>
+      <a class="bottom-nav-item" href="hiragana.html"><span class="bnav-icon cjk">あ</span><span>Hiragana</span></a>
+      <a class="bottom-nav-item active" href="kanji.html"><span class="bnav-icon cjk">漢</span><span>Kanji</span></a>
+      <a class="bottom-nav-item" href="../profile.html"><span class="bnav-icon">&#128100;</span><span>Profil</span></a>
+    </div>
+  </nav>
+</div>
+
+<!-- Kanji Detail Modal -->
+<div class="modal-backdrop kanji-modal" id="kanji-modal">
+  <div class="modal modal-kanji">
+    <div class="modal-header" style="position:relative">
+      <div class="modal-title">Detail Kanji</div>
+      <div class="modal-close" id="modal-close">&#10005;</div>
+    </div>
+    <div class="modal-body">
+      <div class="kanji-modal-content">
+        <div class="kanji-modal-left">
+          <div class="kanji-modal-char-wrap">
+            <div id="modal-kanji-char" class="modal-kanji-char cjk"></div>
+            <div class="kanji-modal-badges">
+              <span class="klp-badge" id="modal-kanji-level"></span>
+              <span class="kanji-stroke-badge" id="modal-kanji-strokes"></span>
+            </div>
+          </div>
+          <div id="modal-stroke-widget" class="modal-stroke-widget"></div>
+        </div>
+        <div class="kanji-modal-right">
+          <div class="kanji-modal-meaning" id="modal-kanji-meaning"></div>
+          <div class="kanji-readings">
+            <div class="kanji-reading-row">
+              <div class="kanji-reading-label">On'yomi (音読み)</div>
+              <div class="kanji-reading-val cjk" id="modal-onyomi"></div>
+            </div>
+            <div class="kanji-reading-row">
+              <div class="kanji-reading-label">Kun'yomi (訓読み)</div>
+              <div class="kanji-reading-val cjk" id="modal-kunyomi"></div>
+            </div>
+          </div>
+          <div class="kanji-example-box">
+            <div class="kanji-example-label">Contoh Kata</div>
+            <div class="kanji-example-word cjk" id="modal-example-word"></div>
+            <div class="kanji-example-reading" id="modal-example-reading"></div>
+            <div class="kanji-example-meaning" id="modal-example-meaning"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" id="modal-close-btn">Tutup</button>
+      <button class="btn btn-primary btn-sm" id="modal-mark-btn">Tandai Hafal</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../../assets/js/core/storage.js"></script>
+<script src="../../assets/js/core/auth.js"></script>
+<script src="../../assets/js/core/router.js"></script>
+<script src="../../assets/js/core/app.js"></script>
+<script src="../../assets/js/modules/audio.js"></script>
+<script src="../../assets/js/data/kanji.js"></script>
+<script src="../../assets/js/modules/progress.js"></script>
+<script src="../../assets/js/modules/xp.js"></script>
+<script src="../../assets/js/modules/challenge.js"></script>
+<script src="../../assets/js/modules/srs.js"></script>
+<script src="../../assets/js/modules/srs-ui.js"></script>
+<script src="../../assets/js/modules/stroke.js"></script>
+<script src="../../assets/js/pages/kanji.js"></script>
+<script src="../../assets/js/modules/pwa.js"></script>
+<script>document.addEventListener("DOMContentLoaded", () => PWAManager.init());</script>
+</body>
+</html>
